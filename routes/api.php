@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Login & Register Buyer, Seller
+Route::post('/login', 'UserController@login');
+Route::post('/register', 'UserController@register');
+
+Route::get('/cek', 'UserController@cek')->middleware('jwt.verify');

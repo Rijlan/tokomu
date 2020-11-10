@@ -26,7 +26,10 @@ Route::post('/login', 'UserController@login');
 Route::post('/register', 'UserController@register');
 
 
-// User
-Route::get('/user/{id}', 'UserDetailController@getUserDetails');
-Route::post('/user/detail', 'UserDetailController@setUserDetails');
-Route::post('/user/update/{id}', 'UserDetailController@updateUser');
+Route::group(['middleware' => ['jwt.verify']], function () {
+    // User
+    Route::get('/getAuthenticatedUser', 'UserController@getAuthenticatedUser');
+    Route::get('/user/{id}', 'UserDetailController@getUserDetails');
+    Route::post('/user/detail', 'UserDetailController@setUserDetails');
+    Route::post('/user/update/{id}', 'UserDetailController@updateUser');
+});

@@ -69,6 +69,6 @@ class UserController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
         }
         
-        return $this->sendResponse('success', 'Data Berhasil Ditambahkan', compact('user'), 200);
+        return $this->sendResponse('success', 'Data Berhasil Diambil', compact('user'), 200);
     }
 }

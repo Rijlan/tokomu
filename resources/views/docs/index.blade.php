@@ -33,6 +33,13 @@
                     <td>name, email, password, password_confirmation</td>
                     <td>-</td>
                 </tr>
+                
+                <tr>
+                    <td>/getAuthenticatedUser</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data user yang login</td>
+                </tr>
 
                 <tr>
                     <td>/user/{id}</td>

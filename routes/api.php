@@ -18,8 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// docs
+Route::get('/docs', 'DocumentationController@index');
+
 // Login & Register Buyer, Seller
 Route::post('/login', 'UserController@login');
 Route::post('/register', 'UserController@register');
 
-Route::get('/cek', 'UserController@cek')->middleware('jwt.verify');
+
+// User
+Route::get('/user/{id}', 'UserDetailController@getUserDetails');
+Route::post('/user/detail', 'UserDetailController@setUserDetails');
+Route::post('/user/update/{id}', 'UserDetailController@updateUser');

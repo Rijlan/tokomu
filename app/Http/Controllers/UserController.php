@@ -68,12 +68,7 @@ class UserController extends Controller
         } catch (Tymon\JWTAuth|Exceptions\JWTException $e) {
             return response()->json(['token_absent'], $e->getStatusCode());
         }
-
-        // return response()->json(compact('user'));
-        return $this->sendResponse('success', 'Data Berhasil Diambil', compact('user'), 200);
-    }
-
-    public function cek() {
-        return response()->json(['Berhasil masuk'], 200);
+        
+        return $this->sendResponse('success', 'Data Berhasil Ditambahkan', compact('user'), 200);
     }
 }

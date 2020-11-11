@@ -54,7 +54,7 @@ class UserDetailController extends Controller
             // $file->storeAs('public/products', $avatar);
 
             // public
-            $file->move(public_path('avatars'), $avatar);
+            $file->move(public_path('uploads/avatars'), $avatar);
 
             $userDetail->avatar = $avatar;
         }

@@ -52,8 +52,13 @@ class ShopController extends Controller
 
         $shop->shop_name = $request->shop_name;
         $shop->description = $request->description;
-        if ($shop->image) {
-            $shop->image = $request->image;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $image = time() . $file->getClientOriginalName();
+
+            $file->move(public_path('uploads/products'), $image);
+
+            $shop->image = $image;
         }
         $shop->user_id = $request->user_id;
 

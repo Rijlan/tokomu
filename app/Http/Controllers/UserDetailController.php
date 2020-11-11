@@ -50,7 +50,11 @@ class UserDetailController extends Controller
             $file = $request->file('avatar');
             $avatar = time() . $file->getClientOriginalName();
 
-            $file->storeAs('public/products', $avatar);
+            // storage heroku error
+            // $file->storeAs('public/products', $avatar);
+
+            // public
+            $file->move(public_path('avatars'), $avatar);
 
             $userDetail->avatar = $avatar;
         }

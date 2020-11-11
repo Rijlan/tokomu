@@ -56,7 +56,7 @@ class ShopController extends Controller
             $file = $request->file('image');
             $image = time() . $file->getClientOriginalName();
 
-            $file->move(public_path('uploads/products'), $image);
+            $file->move(public_path('uploads/shops'), $image);
 
             $shop->image = $image;
         }

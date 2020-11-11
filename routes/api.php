@@ -35,7 +35,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/user/delete', 'UserController@destroy');
 
     // Shop
-    Route::get('/shop', 'ShopController@getShops');
-    Route::get('/shop/{id}', 'ShopController@getShop');
     Route::post('/shop', 'ShopController@setShop');
 });
+
+// Shop public
+Route::get('/shop', 'ShopController@getShops');
+Route::get('/shop/{id}', 'ShopController@getShop');

@@ -32,4 +32,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/user/{id}', 'UserDetailController@getUserDetails');
     Route::post('/user/detail', 'UserDetailController@setUserDetails');
     Route::post('/user/update/{id}', 'UserDetailController@updateUser');
+    Route::post('/user/delete', 'UserController@destroy');
+
+    // Shop
+    Route::get('/shop', 'ShopController@getShops');
+    Route::get('/shop/{id}', 'ShopController@getShop');
+    Route::post('/shop', 'ShopController@setShop');
 });

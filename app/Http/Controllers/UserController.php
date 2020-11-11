@@ -32,27 +32,27 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users',
             'role' => 'required|integer',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-       if ($validator->fails()) {
-           return response()->json($validator->errors()->toJson(), 400);
-       } 
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
 
-       $user = User::create([
-           'name' => $request->get('name'),
-           'email' => $request->get('email'),
-           'role' => $request->get('role'),
-           'password' => Hash::make($request->get('password')),
-       ]);
+        $user = User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'role' => $request->get('role'),
+            'password' => Hash::make($request->get('password')),
+        ]);
 
-       $token = JWTAuth::fromUser($user);
+        $token = JWTAuth::fromUser($user);
 
-       return response()->json(compact('user', 'token'), 201);
+        return response()->json(compact('user', 'token'), 201);
     }
 
     public function getAuthenticatedUser()
@@ -61,14 +61,37 @@ class UserController extends Controller
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
-        } catch (Tymon\JWTAuth|Exceptions\TokenExpiredException $e) {
+        } catch (Tymon\JWTAuth | Exceptions\TokenExpiredException $e) {
             return response()->json(['token_expired'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth|Exceptions\TokenInvalidException $e) {
+        } catch (Tymon\JWTAuth | Exceptions\TokenInvalidException $e) {
             return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth|Exceptions\JWTException $e) {
+        } catch (Tymon\JWTAuth | Exceptions\JWTException $e) {
             return response()->json(['token_absent'], $e->getStatusCode());
         }
-        
+
         return $this->sendResponse('success', 'Data Berhasil Diambil', compact('user'), 200);
+    }
+
+    public function destroy(Request $request)
+    {
+        $password = $request->password;
+
+        $user = User::find($request->user_id);
+
+        if (!$user) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        if (Hash::check($password, $user->password)) {
+            try {
+                $user->delete();
+
+                return $this->sendResponse('success', 'Akun Dihapus', null, 200);
+            } catch (\Throwable $th) {
+                return $this->sendResponse('error', 'Akun Gagal Dihapus', null, 404);
+            }
+        } else {
+            return $this->sendResponse('error', 'Password Salah', null, 404);
+        }
     }
 }

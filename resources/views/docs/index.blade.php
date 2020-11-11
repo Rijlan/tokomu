@@ -13,6 +13,9 @@
         <table>
             <thead>
                 <tr>
+                    <th colspan="4" class="center"><h5>User</h5></th>
+                </tr>
+                <tr>
                     <th>Endpoint</th>
                     <th>Method</th>
                     <th>Data</th>
@@ -60,6 +63,49 @@
                     <td>POST</td>
                     <td>name, email, password, password_confirmation</td>
                     <td>Mengupdate user berdasarkan id</td>
+                </tr>
+
+                <tr>
+                    <td>/user/delete/</td>
+                    <td>POST</td>
+                    <td>user_id, password</td>
+                    <td>Menghapus user berdasarkan id</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4" class="center"><h5>Shop</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/shop</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil semua data shop</td>
+                </tr>
+
+                <tr>
+                    <td>/shop/{id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data shop berdasar id shop</td>
+                </tr>
+
+                <tr>
+                    <td>/shop</td>
+                    <td>POST</td>
+                    <td>shop_name, description, image(optional), user_id</td>
+                    <td>Menambahkan / Mengupdate shop</td>
                 </tr>
             </tbody>
         </table>

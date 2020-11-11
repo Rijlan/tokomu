@@ -46,8 +46,13 @@ class UserDetailController extends Controller
         $userDetail->user_id = $request->user_id;
         $userDetail->phone_number = $request->phone_number;
         $userDetail->address = $request->address;
-        if ($request->avatar) {
-            $userDetail->avatar = $request->avatar;
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $avatar = time() . $file->getClientOriginalName();
+
+            $file->storeAs('public/products', $avatar);
+
+            $userDetail->avatar = $avatar;
         }
 
         try {

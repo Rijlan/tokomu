@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        
+
         if (!$product) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
         }

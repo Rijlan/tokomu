@@ -73,27 +73,26 @@ class UserDetailController extends Controller
     public function updateUser(Request $request, $id)
     {
         $user = User::find($id);
+        
+        if (!$user) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'password' => 'required|string|min:8|confirmed',
+            'name' => 'string',
+            'email' => 'email|unique:users,email,'.$user->id,
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        if (!$user) {
-            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
-        }
+        $data = $request->all();
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $result = array_filter($data);
 
         try {
-            $user->save();
+            $user->update($result);
 
             return $this->sendResponse('success', 'Detail Berhasil Diupdate', compact('user'), 200);
         } catch (\Throwable $th) {

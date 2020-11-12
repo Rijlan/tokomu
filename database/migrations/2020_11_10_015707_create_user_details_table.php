@@ -18,7 +18,7 @@ class CreateUserDetailsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('phone_number');
             $table->string('address');
-            $table->string('avatar')->default('https://www.alliancerehabmed.com/wp-content/uploads/icon-avatar-default.png');
+            $table->string('avatar')->default('default.png');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

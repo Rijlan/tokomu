@@ -61,7 +61,7 @@
                 <tr>
                     <td>/user/update/{id}</td>
                     <td>POST</td>
-                    <td>name, email, password, password_confirmation</td>
+                    <td>name, email</td>
                     <td>Mengupdate user berdasarkan id</td>
                 </tr>
 
@@ -71,6 +71,14 @@
                     <td>user_id, password</td>
                     <td>Menghapus user berdasarkan id</td>
                 </tr>
+
+                <tr>
+                    <td>/user/password/{id}</td>
+                    <td>PATCH</td>
+                    <td>old_password, password, password_confirmation</td>
+                    <td>Mengubah password user</td>
+                </tr>
+                
             </tbody>
         </table>
 
@@ -99,6 +107,13 @@
                     <td>GET</td>
                     <td>-</td>
                     <td>Mengambil data shop berdasar id shop</td>
+                </tr>
+
+                <tr>
+                    <td>/myshop/{id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data shop berdasar id user yang login</td>
                 </tr>
 
                 <tr>

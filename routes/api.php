@@ -33,9 +33,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/user/detail', 'UserDetailController@setUserDetails');
     Route::post('/user/update/{id}', 'UserDetailController@updateUser');
     Route::post('/user/delete', 'UserController@destroy');
+    Route::patch('/user/password/{id}', 'UserController@changePassword');
 
     // Shop
     Route::post('/shop', 'ShopController@setShop');
+    Route::get('/myshop/{id}', 'ShopController@myShop');
+
+    // Product
+     
 });
 
 // Shop public

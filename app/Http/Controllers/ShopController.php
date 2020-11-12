@@ -31,6 +31,17 @@ class ShopController extends Controller
         return $this->sendResponse('success', 'Data Berhasil Diambil', $shop, 200);
     }
 
+    public function myShop($user_id)
+    {
+        $shop = Shop::where('user_id', $user_id)->with('owner')->first();
+
+        if (!$shop) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data Berhasil Diambil', $shop, 200);
+    }
+
     public function setShop(Request $request, Shop $shop)
     {
         if (!User::find($request->user_id)) {
@@ -38,8 +49,8 @@ class ShopController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'shop_name' => 'required|string',
-            'description' => 'required|string',
+            'shop_name' => 'string',
+            'description' => 'string',
         ]);
 
         if ($validator->fails()) {
@@ -48,27 +59,49 @@ class ShopController extends Controller
 
         if (!Shop::where('user_id', $request->user_id)->count() < 1) {
             $shop = Shop::where('user_id', $request->user_id)->first();
-        }
 
-        $shop->shop_name = $request->shop_name;
-        $shop->description = $request->description;
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $image = time() . $file->getClientOriginalName();
+            $data = $request->except(['image']);
 
-            $file->move(public_path('uploads/shops'), $image);
+            $result = array_filter($data);
 
-            $shop->image = $image;
-        }
-        $shop->user_id = $request->user_id;
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $image = time() . $file->getClientOriginalName();
+                
+                $file->move(public_path('uploads/shops'), $image);
 
-        try {
-            $shop->save();
+                $shop->image = $image;
+            }
 
-            $shop = Shop::where('user_id', $request->user_id)->with('owner')->first();
-            return $this->sendResponse('success', 'Toko Berhasil Ditambah', compact('shop'), 200);
-        } catch (\Throwable $th) {
-            return $this->sendResponse('error', 'Toko Gagal Ditambah', $th->getMessage(), 500);
+            try {
+                $shop->update($result);
+    
+                $shop = Shop::where('user_id', $request->user_id)->with('owner')->first();
+                return $this->sendResponse('success', 'Toko Berhasil Diupdate', compact('shop'), 200);
+            } catch (\Throwable $th) {
+                return $this->sendResponse('error', 'Toko Gagal Diupdate', $th->getMessage(), 500);
+            }
+        } else {
+            $shop->shop_name = $request->shop_name;
+            $shop->description = $request->description;
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $image = time() . $file->getClientOriginalName();
+
+                $file->move(public_path('uploads/shops'), $image);
+
+                $shop->image = $image;
+            }
+            $shop->user_id = $request->user_id;
+
+            try {
+                $shop->save();
+    
+                $shop = Shop::where('user_id', $request->user_id)->with('owner')->first();
+                return $this->sendResponse('success', 'Toko Berhasil Ditambah', compact('shop'), 200);
+            } catch (\Throwable $th) {
+                return $this->sendResponse('error', 'Toko Gagal Ditambah', $th->getMessage(), 500);
+            }
         }
     }
 }

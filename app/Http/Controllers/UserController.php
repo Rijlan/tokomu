@@ -94,4 +94,37 @@ class UserController extends Controller
             return $this->sendResponse('error', 'Password Salah', null, 404);
         }
     }
+
+    public function changePassword(Request $request,$id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        if (Hash::check($request->old_password, $user->password)) {
+
+            $user->password = Hash::make($request->password);
+
+            try {
+                $user->save();
+
+                return $this->sendResponse('success', 'Password Diperbarui', null, 200);
+            } catch (\Throwable $th) {
+                return $this->sendResponse('error', 'Password Gagal Diperbarui', null, 404);
+            }
+        } else {
+            return $this->sendResponse('error', 'Password Salah', null, 404);
+        }
+    }
 }

@@ -26,17 +26,18 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::find($id)->with(['category' => function($query) {
-            $query->select('id', 'category');
-        }, 'shop' => function($query) {
-            $query->select('id', 'shop_name', 'image');
-        }])->first();
-
+        $product = Product::find($id);
+        
         if (!$product) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
         }
 
         return $this->sendResponse('success', 'Data Berhasil Diambil', $product, 200);
+        $product = Product::find($id)->with(['category' => function($query) {
+            $query->select('id', 'category');
+        }, 'shop' => function($query) {
+            $query->select('id', 'shop_name', 'image');
+        }])->first();
     }
 
     public function store(Request $request, Product $product)

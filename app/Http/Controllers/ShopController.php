@@ -49,8 +49,8 @@ class ShopController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'shop_name' => 'string',
-            'description' => 'string',
+            'shop_name' => 'string|max:255',
+            'description' => 'string|max:255',
         ]);
 
         if ($validator->fails()) {

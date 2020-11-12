@@ -8,8 +8,15 @@ class Shop extends Model
 {
     protected $fillable = ['shop_name', 'description', 'image', 'user_id'];
     
+    protected $hidden = ['user_id'];
+    
     public function owner()
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
+    public function products()
+    {
+        return $this->hasManyThrough('App\Product', 'App\User');
     }
 }

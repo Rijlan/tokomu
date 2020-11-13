@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Shop;
 use App\User;
 use Illuminate\Http\Request;
@@ -103,5 +104,16 @@ class ShopController extends Controller
                 return $this->sendResponse('error', 'Toko Gagal Ditambah', $th->getMessage(), 500);
             }
         }
+    }
+
+    public function getProducts($id)
+    {
+        $products = Product::where('shop_id', $id)->get();
+
+        if ($products->isEmpty()) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data Berhasil Diambil', $products, 200);
     }
 }

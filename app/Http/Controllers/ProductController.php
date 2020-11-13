@@ -32,12 +32,12 @@ class ProductController extends Controller
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
         }
 
-        return $this->sendResponse('success', 'Data Berhasil Diambil', $product, 200);
         $product = Product::find($id)->with(['category' => function($query) {
             $query->select('id', 'category');
         }, 'shop' => function($query) {
             $query->select('id', 'shop_name', 'image');
         }])->first();
+        return $this->sendResponse('success', 'Data Berhasil Diambil', $product, 200);
     }
 
     public function store(Request $request, Product $product)

@@ -127,4 +127,12 @@ class UserController extends Controller
             return $this->sendResponse('error', 'Password Salah', null, 404);
         }
     }
+
+    public function logout() 
+    {
+        if (JWTAuth::invalidate(JWTAuth::getToken())) {
+            return $this->sendResponse('success', 'Behasil Logout', null, 200);
+        }
+        return $this->sendResponse('error', 'Gagal Logout', null, 400);
+    }
 }

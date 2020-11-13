@@ -8,7 +8,7 @@ class Shop extends Model
 {
     protected $fillable = ['shop_name', 'description', 'image', 'user_id'];
     
-    protected $hidden = ['user_id'];
+    // protected $hidden = ['user_id'];
     
     public function owner()
     {

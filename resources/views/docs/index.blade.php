@@ -36,6 +36,13 @@
                     <td>name, email, password, password_confirmation</td>
                     <td>-</td>
                 </tr>
+
+                <tr>
+                    <td>/logout</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
                 
                 <tr>
                     <td>/getAuthenticatedUser</td>
@@ -110,7 +117,7 @@
                 </tr>
 
                 <tr>
-                    <td>/myshop/{id}</td>
+                    <td>/myshop/{user_id}</td>
                     <td>GET</td>
                     <td>-</td>
                     <td>Mengambil data shop berdasar id user yang login</td>
@@ -122,6 +129,14 @@
                     <td>shop_name, description, image(optional), user_id</td>
                     <td>Menambahkan / Mengupdate shop</td>
                 </tr>
+
+                <tr>
+                    <td>/shop/{id}/products</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil semua produk yang ada di shop berdasar id shop</td>
+                </tr>
+
             </tbody>
         </table>
 
@@ -171,6 +186,49 @@
                     <td>DELETE</td>
                     <td>-</td>
                     <td>Menghapus produk</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4" class="center"><h5>Cart</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/user/cart/{user_id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data keranjang dari user</td>
+                </tr>
+
+                <tr>
+                    <td>/user/cart</td>
+                    <td>POST</td>
+                    <td>product_id, user_id, qty</td>
+                    <td>Menambahkan produk ke keranjang</td>
+                </tr>
+
+                <tr>
+                    <td>/user/cart/{id}</td>
+                    <td>DELETE</td>
+                    <td>-</td>
+                    <td>Menghapus produk dari keranjang</td>
+                </tr>
+
+                <tr>
+                    <td>/user/cart/{id}</td>
+                    <td>PATCH</td>
+                    <td>qty</td>
+                    <td>Mengubah keranjang</td>
                 </tr>
             </tbody>
         </table>

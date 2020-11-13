@@ -10,7 +10,7 @@
 <div class="container">
     <h4 class="center">Category</h4>
     <div class="row">
-        <div class="col s6">
+        <div class="col s12 m10 l8">
             <table>
                 <thead>
                     <tr>

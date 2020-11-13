@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,12 @@ Route::get('/category/{id}/edit', 'CategoryController@edit');
 Route::put('/category/{id}', 'CategoryController@update');
 Route::delete('/category/{id}', 'CategoryController@destroy');
 
- Route::get('/user', '');    
+Route::get('/user', 'UserController@getUser');
+Route::get('/user/create', 'UserController@createUser');
+Route::get('/user/{slug}', 'UserController@showUser');
+Route::post('/user', 'UserController@storeUser');
+Route::get('/user/{id}/edit', 'UserController@editUser');   
+Route::put('/user/{id}', 'UserController@updateUser');
+Route::delete('/user/{id}', 'UserController@destroyUser');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -43,8 +43,10 @@ Route::delete('/user/{id}', 'UserController@destroyUser');
 
 //route shop
 Route::get('/shop', 'ShopController@getShop');
-Route::delete('/shop', 'ShopController@destroyShop');
+Route::delete('/shop/{id}', 'ShopController@destroyShop');
 
 //route product
+Route::get('/product', 'ProductController@getProduct');
+Route::delete('/product/{id}', 'ProductController@destroyProduct');
 
 Route::get('/home', 'HomeController@index')->name('home');

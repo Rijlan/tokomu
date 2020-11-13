@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Shop;
 use App\User;
 use Illuminate\Http\Request;
@@ -117,4 +118,19 @@ class HomeController extends Controller
         Shop::find($id)->delete();
         return redirect('/shop');
     }
+
+    //controllerproduct
+
+    public function getProduct()
+    {
+        $products = Product::all();
+        return view('shop.index', compact('products'));
+    }
+
+    public function destroyProduct($id)
+    {
+        Product::find($id)->delete();
+        return redirect('/shop');
+    }
+
 }

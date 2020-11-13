@@ -29,6 +29,8 @@ class HomeController extends Controller
         return view('home');
     }
 
+    //controllerUser
+
     public function getUser()
     {
         $users = User::all();
@@ -102,5 +104,17 @@ class HomeController extends Controller
         return redirect('/user');
     }
 
-    
+    //controllershop
+
+    public function getShop()
+    {
+        $shops = Shop::all();
+        return view('shop.index', compact('shops'));
+    }
+
+    public function destroyShop($id)
+    {
+        Shop::find($id)->delete();
+        return redirect('/shop');
+    }
 }

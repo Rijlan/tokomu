@@ -60,3 +60,6 @@ Route::get('/shop/{id}/products', 'ShopController@getProducts');
 // Product public
 Route::get('/product', 'ProductController@index');
 Route::get('/product/{id}', 'ProductController@show');
+
+// Category public
+Route::get('/categories', 'CategoryController@getCategories');

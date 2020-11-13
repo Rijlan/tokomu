@@ -69,4 +69,15 @@ class CategoryController extends Controller
         Category::find($id)->delete();
         return redirect('/category');
     }
+
+    public function getCategories()
+    {
+        $categories = Category::all();
+
+        if ($categories->isEmpty()) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data Berhasil Diambil', $categories, 200);
+    }
 }

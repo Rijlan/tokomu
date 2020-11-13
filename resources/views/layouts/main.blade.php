@@ -1,66 +1,94 @@
 <!doctype html>
 <html lang="en">
-  <head>
-   
+
+<head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
 
-    <title>@yield('title')</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="/">Tokomu</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/shop">Shops</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/product">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/message">Messages</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user_detail">User_details</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user">Users</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/order_detail">Order_details</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/cart">Carts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/category">Categories</a>
-          </li>
-        </ul>
-        
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
+<body>
+    <nav class="nav-wrapper grey darken-2">
+        <div class="container">
+            <a href="#" class="brand-logo">
+                Dashboard
+            </a>
+            <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/category">Category</a></li>
+                <li><a href="/user">User</a></li>
+                <li><a href="/shop">Shop</a></li>
+                <li><a href="/product">Product</a></li>
+                <li><a href="/chart">Chart</a></li>
+                <li><a href="/transaction">Transaction</a></li>
+                <li>
+                    <!-- Dropdown Trigger -->
+                    <a class="dropdown-trigger btn grey lighten-3 black-text" href="#"
+                        data-target="dropdown1">{{ Auth::user()->name }}</a>
+
+                    <!-- Dropdown Structure -->
+                    <ul id="dropdown1" class="dropdown-content">
+                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                          document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                        </li>
+                        <form style="display: none;" id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                        </form>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    
+    <ul class="sidenav" id="mobile-links">
+        <li><a href="/category">Category</a></li>
+        <li><a href="/user">User</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li><a href="/product">Product</a></li>
+        <li><a href="/chart">Chart</a></li>
+        <li><a href="/transaction">Transaction</a></li>
+        <li>
+            <!-- Dropdown Trigger -->
+            <a class="dropdown-trigger btn grey lighten-3 black-text" href="#"
+                data-target="dropdown2">{{ Auth::user()->name }}</a>
+
+            <!-- Dropdown Structure -->
+            <ul id="dropdown2" class="dropdown-content">
+                <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                </li>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </ul>
+        </li>
+    </ul>
+
     @yield('content')
 
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-  </body>
+    <script>
+        $(document).ready(function () {
+            $('.sidenav').sidenav();
+        });
+
+        $('.dropdown-trigger').dropdown();
+
+        $(document).ready(function () {
+            $('.modal').modal();
+        });
+
+    </script>
+
+</body>
+
 </html>

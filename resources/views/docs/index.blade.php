@@ -137,6 +137,13 @@
                     <td>Mengambil semua produk yang ada di shop berdasar id shop</td>
                 </tr>
 
+                <tr>
+                    <td>/shop/{shop_id}/category</td>
+                    <td>POST</td>
+                    <td>category_id</td>
+                    <td>Mengambil semua produk yang ada di shop berdasar id shop dan id category</td>
+                </tr>
+
             </tbody>
         </table>
 
@@ -232,6 +239,51 @@
                 </tr>
             </tbody>
         </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4" class="center"><h5>Transaction</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/user/{user_id}/transaction</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data transaksi user</td>
+                </tr>
+
+                <tr>
+                    <td>/transaction/{id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data transaksi berdasarkan id</td>
+                </tr>
+
+                <tr>
+                    <td>/transaction</td>
+                    <td>POST</td>
+                    <td>user_id, product_id, qty</td>
+                    <td>Menambah data transaksi</td>
+                </tr>
+
+                <tr>
+                    <td>/transaction/{id}</td>
+                    <td>PATCH</td>
+                    <td>status(pending, proccess, done)</td>
+                    <td>Mengubah status transaksi</td>
+                </tr>
+
+            </tbody>
+        </table>
+
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

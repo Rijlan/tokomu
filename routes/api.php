@@ -50,12 +50,19 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/user/cart', 'CartController@store');
     Route::delete('/user/cart/{id}', 'CartController@destroy');
     Route::patch('/user/cart/{id}', 'CartController@update');
+
+    // Transactions
+    Route::get('/user/{id}/transaction', 'TransactionController@getUserTransactions');
+    Route::get('/transaction/{id}', 'TransactionController@getTransaction');
+    Route::post('/transaction', 'TransactionController@addTransaction');
+    Route::patch('/transaction/{id}', 'TransactionController@setStatusTransaction');
 });
 
 // Shop public
 Route::get('/shop', 'ShopController@getShops');
 Route::get('/shop/{id}', 'ShopController@getShop');
 Route::get('/shop/{id}/products', 'ShopController@getProducts');
+Route::post('/shop/{id}/category', 'ShopController@getProductsByCategory');
 
 // Product public
 Route::get('/product', 'ProductController@index');

@@ -6,6 +6,7 @@ use App\Product;
 use App\Shop;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 class ShopController extends Controller
@@ -67,7 +68,7 @@ class ShopController extends Controller
 
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $image = time() . $file->getClientOriginalName();
+                $image = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
                 
                 $file->move(public_path('uploads/shops'), $image);
 
@@ -115,5 +116,22 @@ class ShopController extends Controller
         }
 
         return $this->sendResponse('success', 'Data Berhasil Diambil', $products, 200);
+    }
+
+    public function getProductsByCategory(Request $request, $id)
+    {
+        $shop = Shop::where('user_id', $id)->first();
+
+        if (!$shop) {
+            return $this->sendResponse('error', 'Shop Tidak Ada', null, 404);
+        }
+
+        $products = Product::where('category_id' , '=' , $request->category_id, 'AND', 'shop_id', '=', $id)->get();
+
+        if ($products->isEmpty()) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data Berhasil Diambil', compact('shop', 'products'), 200);
     }
 }

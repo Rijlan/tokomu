@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Shop;
 use App\User;
+use App\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,7 +31,7 @@ class HomeController extends Controller
         return view('home');
     }
 
-    //controllerUser
+    //controllerUsers
 
     public function getUser()
     {
@@ -105,7 +106,7 @@ class HomeController extends Controller
         return redirect('/user');
     }
 
-    //controllershop
+    //controllerShops
 
     public function getShop()
     {
@@ -119,7 +120,7 @@ class HomeController extends Controller
         return redirect('/shop');
     }
 
-    //controllerproduct
+    //controllerProducts
 
     public function getProduct()
     {
@@ -133,4 +134,31 @@ class HomeController extends Controller
         return redirect('/shop');
     }
 
+    //controllerTransactions
+
+    // public function getTransaction()
+    // {
+    //     $transactions = Transaction::all();
+    //     return view('shop.index', compact('transactions'));
+    // }
+
+    // public function destroyTransaction($id)
+    // {
+    //     Transaction::find($id)->delete();
+    //     return redirect('/shop');
+    // }
+
+    //controllerCarts
+
+    public function getCart()
+    {
+        $carts = Cart::all();
+        return view('/cart.index', compact('carts'));
+    }
+
+    public function destroyCart($id)
+    {
+        Cart::find($id)->delete();
+        return redirect('/cart');
+    }
 }

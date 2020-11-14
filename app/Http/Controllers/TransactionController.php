@@ -66,6 +66,7 @@ class TransactionController extends Controller
         $transaction->product_id = $request->product_id;
         $transaction->qty = $request->qty;
         $transaction->total = $request->qty * $product->price;
+        $transaction->status = 'pending';
 
         try {
             $transaction->save();

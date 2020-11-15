@@ -33,7 +33,7 @@ class ProductController extends Controller
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
         }
 
-        $product = Product::find($id)->with(['category' => function($query) {
+        $product = Product::where('id', $id)->with(['category' => function($query) {
             $query->select('id', 'category');
         }, 'shop' => function($query) {
             $query->select('id', 'shop_name', 'image');
@@ -90,7 +90,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $image = time() . $file->getClientOriginalName();
+            $image = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
             
             $file->move(public_path('uploads/products'), $image);
 

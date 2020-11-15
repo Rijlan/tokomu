@@ -88,7 +88,7 @@ class ShopController extends Controller
             $shop->description = $request->description;
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $image = time() . $file->getClientOriginalName();
+                $image = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
 
                 $file->move(public_path('uploads/shops'), $image);
 

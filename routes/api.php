@@ -70,3 +70,6 @@ Route::get('/product/{id}', 'ProductController@show');
 
 // Category public
 Route::get('/categories', 'CategoryController@getCategories');
+
+// Search
+Route::post('/search', 'MainController@search');

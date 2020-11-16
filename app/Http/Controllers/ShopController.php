@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Shop;
+use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -133,5 +134,22 @@ class ShopController extends Controller
         }
 
         return $this->sendResponse('success', 'Data Berhasil Diambil', compact('shop', 'products'), 200);
+    }
+
+    public function getMyTransaction($shop_id)
+    {
+        $shop = Shop::find($shop_id);
+
+        if (!$shop) {
+            return $this->sendResponse('error', 'Shop Tidak Ada', null, 404);
+        }
+
+        $transactions = Transaction::where('shop_id', $shop_id)->with('buyer', 'buying')->get();
+
+        if (!$transactions) {
+            return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data Berhasil Diambil', $transactions, 200);
     }
 }

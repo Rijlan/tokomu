@@ -144,6 +144,13 @@
                     <td>Mengambil semua produk yang ada di shop berdasar id shop dan id category</td>
                 </tr>
 
+                <tr>
+                    <td>/shop/{shop_id}/transaction</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data pesanan shop</td>
+                </tr>
+
             </tbody>
         </table>
 
@@ -279,6 +286,29 @@
                     <td>PATCH</td>
                     <td>status(pending, proccess, done)</td>
                     <td>Mengubah status transaksi</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4" class="center"><h5>Other</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/search</td>
+                    <td>POST</td>
+                    <td>keyword</td>
+                    <td>Memcari toko atau produk</td>
                 </tr>
 
             </tbody>

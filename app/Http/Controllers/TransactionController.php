@@ -43,6 +43,7 @@ class TransactionController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
             'product_id' => 'required|integer',
+            'shop_id' => 'required|integer',
             'qty' => 'required|integer'
         ]);
 
@@ -64,6 +65,7 @@ class TransactionController extends Controller
         
         $transaction->user_id = $request->user_id;
         $transaction->product_id = $request->product_id;
+        $transaction->shop_id = $request->shop_id;
         $transaction->qty = $request->qty;
         $transaction->total = $request->qty * $product->price;
         $transaction->status = 'pending';

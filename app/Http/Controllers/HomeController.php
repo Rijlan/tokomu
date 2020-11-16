@@ -69,14 +69,14 @@ class HomeController extends Controller
     public function showUser($id)
     {
         $user = User::find($id);
-        return view('/user.single', compact('user'));
+        return view('user.single', compact('user'));
 
     }
 
     public function editUser($id)
     {
         $users = User::find($id);
-        return view('/user.edit', compact('users'));
+        return view('user.edit', compact('users'));
     }
 
     public function updateUser(Request $request, $id)
@@ -126,7 +126,7 @@ class HomeController extends Controller
     public function getProduct()
     {
         $products = Product::all();
-        return view('shop.index', compact('products'));
+        return view('product.index', compact('products'));
     }
 
     public function destroyProduct($id)
@@ -140,7 +140,7 @@ class HomeController extends Controller
     public function getTransaction()
     {
         $transactions = Transaction::all();
-        return view('shop.index', compact('transactions'));
+        return view('transaction.index', compact('transactions'));
     }
 
     public function destroyTransaction($id)
@@ -154,7 +154,7 @@ class HomeController extends Controller
     public function getCart()
     {
         $carts = Cart::all();
-        return view('/cart.index', compact('carts'));
+        return view('cart.index', compact('carts'));
     }
 
     public function destroyCart($id)

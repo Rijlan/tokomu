@@ -18,12 +18,12 @@ class UserController extends Controller
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
-                    'error' => 'invalid_credentials'
+                    'error' => 'Email atau Password salah'
                 ], 400);
             }
         } catch (JWTException $e) {
             return response()->json([
-                'error' => 'could_not_create_token'
+                'error' => 'Tidak bisa membuat Token'
             ], 500);
         }
 
@@ -59,14 +59,14 @@ class UserController extends Controller
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
+                return response()->json(['User Tidak Ditemukan'], 404);
             }
         } catch (Tymon\JWTAuth | Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
+            return response()->json(['Token Kadaluarsa'], $e->getStatusCode());
         } catch (Tymon\JWTAuth | Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
+            return response()->json(['Token Tidak Valid'], $e->getStatusCode());
         } catch (Tymon\JWTAuth | Exceptions\JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
+            return response()->json(['Token Tidak ada'], $e->getStatusCode());
         }
 
         return $this->sendResponse('success', 'Data Berhasil Diambil', compact('user'), 200);

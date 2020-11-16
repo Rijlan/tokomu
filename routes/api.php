@@ -38,6 +38,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Shop
     Route::post('/shop', 'ShopController@setShop');
+    Route::get('/shop/{shop_id}/transaction', 'ShopController@getMyTransaction');
     Route::get('/myshop/{user_id}', 'ShopController@myShop');
 
     // Product
@@ -70,3 +71,6 @@ Route::get('/product/{id}', 'ProductController@show');
 
 // Category public
 Route::get('/categories', 'CategoryController@getCategories');
+
+// Search
+Route::post('/search', 'MainController@search');

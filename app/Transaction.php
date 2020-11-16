@@ -12,4 +12,14 @@ class Transaction extends Model
     {
         return $this->belongsTo('App\Product')->with('shop');
     }
+
+    public function buying()
+    {
+        return $this->belongsTo('App\Product', 'product_id');
+    }
+
+    public function buyer()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }

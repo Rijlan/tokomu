@@ -33,28 +33,28 @@ Route::put('/category/{id}', 'CategoryController@update');
 Route::delete('/category/{id}', 'CategoryController@destroy');
 
 //route users
-Route::get('/user', 'UserController@getUser');
-Route::get('/user/create', 'UserController@createUser');
-Route::get('/user/{slug}', 'UserController@showUser');
-Route::post('/user', 'UserController@storeUser');
-Route::get('/user/{id}/edit', 'UserController@editUser');   
-Route::put('/user/{id}', 'UserController@updateUser');
-Route::delete('/user/{id}', 'UserController@destroyUser');
+Route::get('/user', 'HomeController@getUser');
+Route::get('/user/create', 'HomeController@createUser');
+Route::get('/user/{slug}', 'HomeController@showUser');
+Route::post('/user', 'HomeController@storeUser');
+Route::get('/user/{id}/edit', 'HomeController@editUser');   
+Route::put('/user/{id}', 'HomeController@updateUser');
+Route::delete('/user/{id}', 'HomeController@destroyUser');
 
 //route shops
-Route::get('/shop', 'ShopController@getShop');
-Route::delete('/shop/{id}', 'ShopController@destroyShop');
+Route::get('/shop', 'HomeController@getShop');
+Route::delete('/shop/{id}', 'HomeController@destroyShop');
 
 //route products
-Route::get('/product', 'ProductController@getProduct');
-Route::delete('/product/{id}', 'ProductController@destroyProduct');
+Route::get('/product', 'HomeController@getProduct');
+Route::delete('/product/{id}', 'HomeController@destroyProduct');
 
 //route transactions
-Route::get('/transaction', 'TransactionController@getTransaction');
-Route::delete('/transaction/{id}', 'TransactionController@destroyTransaction');
+Route::get('/transaction', 'HomeController@getTransaction');
+Route::delete('/transaction/{id}', 'HomeController@destroyTransaction');
 
 //route carts
-Route::get('/cart', 'CartController@getCart');
-Route::delete('/cart', 'CartController@destroyCart');
+Route::get('/cart', 'HomeController@getCart');
+Route::delete('/cart', 'HomeController@destroyCart');
 
 Route::get('/home', 'HomeController@index')->name('home');

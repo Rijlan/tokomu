@@ -6,6 +6,7 @@ use App\Product;
 use App\Shop;
 use App\User;
 use App\Cart;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -136,17 +137,17 @@ class HomeController extends Controller
 
     //controllerTransactions
 
-    // public function getTransaction()
-    // {
-    //     $transactions = Transaction::all();
-    //     return view('shop.index', compact('transactions'));
-    // }
+    public function getTransaction()
+    {
+        $transactions = Transaction::all();
+        return view('shop.index', compact('transactions'));
+    }
 
-    // public function destroyTransaction($id)
-    // {
-    //     Transaction::find($id)->delete();
-    //     return redirect('/shop');
-    // }
+    public function destroyTransaction($id)
+    {
+        Transaction::find($id)->delete();
+        return redirect('/shop');
+    }
 
     //controllerCarts
 

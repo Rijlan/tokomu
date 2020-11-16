@@ -227,7 +227,7 @@
                 <tr>
                     <td>/user/cart</td>
                     <td>POST</td>
-                    <td>product_id, user_id, shop_id, qty</td>
+                    <td>product_id, user_id, qty</td>
                     <td>Menambahkan produk ke keranjang</td>
                 </tr>
 
@@ -277,7 +277,7 @@
                 <tr>
                     <td>/transaction</td>
                     <td>POST</td>
-                    <td>user_id, product_id, shop_id, qty</td>
+                    <td>user_id, product_id, qty</td>
                     <td>Menambah data transaksi</td>
                 </tr>
 

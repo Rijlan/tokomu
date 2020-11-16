@@ -31,7 +31,6 @@ class CartController extends Controller
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|integer',
             'user_id' => 'required|integer',
-            'shop_id' => 'required|integer',
             'qty' => 'required|integer',
         ]);
 
@@ -41,7 +40,6 @@ class CartController extends Controller
 
         $cart->product_id = $request->product_id;
         $cart->user_id = $request->user_id;
-        $cart->shop_id = $request->shop_id;
         $cart->qty = $request->qty;
 
         try {

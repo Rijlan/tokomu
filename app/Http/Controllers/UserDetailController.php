@@ -6,6 +6,7 @@ use App\User;
 use App\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 class UserDetailController extends Controller
@@ -48,7 +49,7 @@ class UserDetailController extends Controller
         $userDetail->address = $request->address;
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
-            $avatar = time() . $file->getClientOriginalName();
+            $avatar = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
 
             // storage heroku error
             // $file->storeAs('public/products', $avatar);

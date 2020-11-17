@@ -18,6 +18,8 @@
                         <th>Product Name</th>
                         <th>Description</th>
                         <th>Price</th>
+                        <th>category</th>
+                        <th>shop</th>
                         <th>Stock</th>
                         <th>Image</th>
                         <th class="center">Action</th>
@@ -30,9 +32,10 @@
                             <td>{{ $product->product_name }}</td>
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->price }}</td>
+                            <td>{{ $product->category->category }}</td>
+                            <td>{{ $product->shop->shop_name }}</td>
                             <td>{{ $product->stock }}</td>
                             <td><img src="{{ asset('uploads/products') }}/{{ $product->image }}" alt="{{ $product->image }}" width="80px"></td>
-                            <td>{{ $product->poduct_name }}</td>
                             <td class="center">
                                 <form action="/product/{{ $product->id }}" style="display: inline-block;"
                                     method="POST">

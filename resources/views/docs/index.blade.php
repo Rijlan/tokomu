@@ -201,6 +201,13 @@
                     <td>-</td>
                     <td>Menghapus produk</td>
                 </tr>
+
+                <tr>
+                    <td>/product/category/{category_id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mencari Produk berdasarkan kategori</td>
+                </tr>
             </tbody>
         </table>
 

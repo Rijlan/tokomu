@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->bigInteger('price');
             $table->integer('stock');
-            $table->string('image')->default('default.png');
+            $table->string('image')->default('https://via.placeholder.com/500');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('shop_id');
             $table->timestamps();

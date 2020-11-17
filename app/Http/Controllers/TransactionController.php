@@ -43,7 +43,7 @@ class TransactionController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
             'product_id' => 'required|integer',
-            'qty' => 'required|integer'
+            'qty' => 'required|integer|min:0|not_in:0'
         ]);
 
         if ($validator->fails()) {
@@ -60,6 +60,13 @@ class TransactionController extends Controller
 
         if (!$product) {
             return $this->sendResponse('error', 'Data Produk Tidak Ada', null, 404);
+        }
+        
+        if ($product->stock < $request->qty) {
+            return $this->sendResponse('error', 'Stok Tidak Cukup', null, 404);
+        } else {
+            $product->stock = $product->stock - $request->qty;
+            $product->save();
         }
 
         $shop_id = Product::select('shop_id')->where('id', $request->product_id)->get();

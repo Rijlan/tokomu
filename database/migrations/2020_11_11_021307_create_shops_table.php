@@ -17,7 +17,7 @@ class CreateShopsTable extends Migration
             $table->id();
             $table->string('shop_name');
             $table->string('description');
-            $table->string('image')->default('default.jpg');
+            $table->string('image')->default('https://via.placeholder.com/300');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

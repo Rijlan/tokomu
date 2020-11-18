@@ -8,6 +8,7 @@ use App\User;
 use App\Cart;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
@@ -60,7 +61,10 @@ class HomeController extends Controller
         }
 
         User::create([
-            'user' => $request->user
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role
         ]);
         return redirect('/user')->with('status', 'user has created');
 

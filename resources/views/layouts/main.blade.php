@@ -87,6 +87,10 @@
             $('.modal').modal();
         });
 
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+
     </script>
 
 </body>

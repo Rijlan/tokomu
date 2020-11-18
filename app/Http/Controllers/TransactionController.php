@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\Invoice;
 use App\Product;
+use App\Shop;
 use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
@@ -32,12 +33,14 @@ class TransactionController extends Controller
     public function getTransaction($id)
     {
         $transaction = Transaction::where('id', $id)->with('product')->first();
+        
+        $shop = Shop::where('id', $transaction->product->shop_id)->with('shopdetail')->first();
 
         if (!$transaction) {
             return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
         }
 
-        return $this->sendResponse('success', 'Data Berhasil Diambil', $transaction, 200);
+        return $this->sendResponse('success', 'Data Berhasil Diambil', compact('transaction', 'shop'), 200);
     }
 
     public function addTransaction(Request $request, Transaction $transaction)

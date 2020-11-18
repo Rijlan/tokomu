@@ -71,7 +71,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::patch('/invoice/{id}', 'InvoiceController@update');
     Route::delete('/invoice/{id}', 'InvoiceController@delete');
 
-    // Bank
+    // Account
+    Route::post('/shop/account', 'ShopDetailController@addAccount');
+    Route::patch('/shop/account/{shop_id}', 'ShopDetailController@updateAccount');
+    Route::get('/shop/account/{shop_id}', 'ShopDetailController@getAccount');
+    Route::delete('/shop/account/{shop_id}', 'ShopDetailController@deleteAccount');
 });
 
 // Shop public

@@ -19,4 +19,9 @@ class Shop extends Model
     {
         return $this->hasManyThrough('App\Product', 'App\User');
     }
+
+    public function shopdetail()
+    {
+        return $this->hasOne('App\ShopDetail');
+    }
 }

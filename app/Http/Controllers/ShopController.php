@@ -36,7 +36,7 @@ class ShopController extends Controller
 
     public function myShop($user_id)
     {
-        $shop = Shop::where('user_id', $user_id)->with('owner')->first();
+        $shop = Shop::where('user_id', $user_id)->with('owner', 'shopdetail')->first();
 
         if (!$shop) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -53,7 +53,7 @@ class ShopController extends Controller
 
         $validator = Validator::make($request->all(), [
             'shop_name' => 'string|max:255',
-            'description' => 'string|max:255',
+            'description' => 'string',
         ]);
 
         if ($validator->fails()) {

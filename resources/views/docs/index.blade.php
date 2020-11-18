@@ -387,6 +387,50 @@
         <table>
             <thead>
                 <tr>
+                    <th colspan="4" class="center"><h5>Account</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/shop/account</td>
+                    <td>POST</td>
+                    <td>shop_id, nama_rekening, no_rekening, nama_bank, kode_bank</td>
+                    <td>Menambahkan rekening pada shop</td>
+                </tr>
+
+                <tr>
+                    <td>/shop/account/{shop_id}</td>
+                    <td>POST</td>
+                    <td>nama_rekening, no_rekening, nama_bank, kode_bank</td>
+                    <td>Mengubah rekening pada shop</td>
+                </tr>
+
+                <tr>
+                    <td>/shop/account/{shop_id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil rekening pada shop</td>
+                </tr>
+
+                <tr>
+                    <td>/shop/account/{shop_id}</td>
+                    <td>DELETE</td>
+                    <td>-</td>
+                    <td>Menghapus rekening pada shop</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
                     <th colspan="4" class="center"><h5>Other</h5></th>
                 </tr>
                 <tr>

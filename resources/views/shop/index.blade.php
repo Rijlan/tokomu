@@ -28,7 +28,7 @@
                             <td>{{ $key+1 }}</td>
                             <td>{{ $shop->shop_name }}</td>
                             <td>{{ $shop->description }}</td>
-                            <td><img src="{{ asset('uploads/shops') }}/{{ $shop->image }}" alt="{{ $shop->image }}" width="80px"></td>
+                            <td><img src="{{ $shop->image }}" alt="{{ $shop->image }}" width="80px"></td>
                             <td>{{ $shop->shop_name }}</td>
                             <td class="center">
                                 <form action="/shop/{{ $shop->id }}" style="display: inline-block;"

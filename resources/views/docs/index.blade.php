@@ -295,6 +295,92 @@
                     <td>Mengubah status transaksi</td>
                 </tr>
 
+                <tr>
+                    <td>/transaction/approve</td>
+                    <td>POST</td>
+                    <td>transaction_id, receipt, delivery_service</td>
+                    <td>Mengkonfirmasi Pembayaran</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4" class="center"><h5>Payment</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/payment/{id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data pembayaran user berdasarkan id</td>
+                </tr>
+
+                <tr>
+                    <td>/payment/transaction/{id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil data pembayaran user berdasarkan id transaksi</td>
+                </tr>
+
+                <tr>
+                    <td>/payment</td>
+                    <td>POST</td>
+                    <td>transaction_id, image</td>
+                    <td>Menambah bukti pembayaran</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4" class="center"><h5>Invoice</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/invoice/{id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil resi berdasarkan id</td>
+                </tr>
+
+                <tr>
+                    <td>/invoice/transaction/{id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil resi berdasarkan id transaksi</td>
+                </tr>
+
+                <tr>
+                    <td>/invoice/{id}</td>
+                    <td>PATCH</td>
+                    <td>receipt, delivery_service</td>
+                    <td>Mengupdate resi</td>
+                </tr>
+
+                <tr>
+                    <td>/invoice/{id}</td>
+                    <td>DELETE</td>
+                    <td>-</td>
+                    <td>Menghapus resi</td>
+                </tr>
             </tbody>
         </table>
 

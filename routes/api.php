@@ -39,6 +39,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Shop
     Route::post('/shop', 'ShopController@setShop');
     Route::get('/shop/{shop_id}/transaction', 'ShopController@getMyTransaction');
+    Route::get('/shop/{shop_id}/payment', 'PaymentProofController@getPaymentProofShop');
     Route::get('/myshop/{user_id}', 'ShopController@myShop');
 
     // Product
@@ -57,6 +58,20 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/transaction/{id}', 'TransactionController@getTransaction');
     Route::post('/transaction', 'TransactionController@addTransaction');
     Route::patch('/transaction/{id}', 'TransactionController@setStatusTransaction');
+    Route::post('/transaction/approve', 'TransactionController@approveTransaction');
+
+    // Payment
+    Route::get('/payment/{id}', 'PaymentProofController@getPaymentProof');
+    Route::get('/payment/transaction/{id}', 'PaymentProofController@getPaymentProofTransaction');
+    Route::post('/payment', 'PaymentProofController@addPaymentProof');
+
+    // Invoice
+    Route::get('/invoice/{id}', 'InvoiceController@getInvoice');
+    Route::get('/invoice/transaction/{id}', 'InvoiceController@getTransactionInvoice');
+    Route::patch('/invoice/{id}', 'InvoiceController@update');
+    Route::delete('/invoice/{id}', 'InvoiceController@delete');
+
+    // Bank
 });
 
 // Shop public

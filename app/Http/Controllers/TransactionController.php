@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
+use App\Invoice;
 use App\Product;
 use App\Transaction;
 use App\User;
@@ -80,6 +82,12 @@ class TransactionController extends Controller
         $transaction->total = $request->qty * $product->price;
         $transaction->status = 'pending';
 
+        $cart = Cart::where('user_id', $request->user_id)->where('product_id', $request->product_id)->first();
+        if (!$cart) {
+            return $this->sendResponse('error', 'Cart Tidak Ada', null, 500);
+        }
+        $cart->delete();
+
         try {
             $transaction->save();
             
@@ -114,6 +122,42 @@ class TransactionController extends Controller
             return $this->sendResponse('success', 'Status Berhasil Diupdate', $transaction, 200);
         } catch (\Throwable $th) {
             return $this->sendResponse('error', 'Status Gagal Diupdate', $th->getMessage(), 500);
+        }
+    }
+
+    public function approveTransaction(Request $request)
+    {
+        $transaction = Transaction::find($request->transaction_id);
+
+        if (!$transaction) {
+            return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
+        }
+
+        $transaction->status = 'proccess';
+        $transaction->save();
+
+        $validator = Validator::make($request->all(), [
+            'transaction_id' => 'required|unique:invoices',
+            'receipt' => 'required|string|unique:invoices',
+            'delivery_service' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response($validator->errors());
+        }
+
+        $invoice = new Invoice;
+
+        $invoice->transaction_id = $request->transaction_id;
+        $invoice->receipt = $request->receipt;
+        $invoice->delivery_service = $request->delivery_service;
+
+        try {
+            $invoice->save();
+            
+            return $this->sendResponse('success', 'Pembayaran Dikonfirmasi', $invoice, 200);
+        } catch (\Throwable $th) {
+            return $this->sendResponse('error', 'Pembayaran Dikonfirmasi', $th->getMessage(), 500);
         }
     }
 }

@@ -8,6 +8,7 @@ use App\User;
 use App\Cart;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
@@ -60,7 +61,10 @@ class HomeController extends Controller
         }
 
         User::create([
-            'user' => $request->user
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role
         ]);
         return redirect('/user')->with('status', 'user has created');
 
@@ -69,14 +73,14 @@ class HomeController extends Controller
     public function showUser($id)
     {
         $user = User::find($id);
-        return view('user.single', compact('user'));
+        return view('/user.single', compact('user'));
 
     }
 
     public function editUser($id)
     {
         $users = User::find($id);
-        return view('user.edit', compact('users'));
+        return view('/user.edit', compact('users'));
     }
 
     public function updateUser(Request $request, $id)
@@ -125,36 +129,36 @@ class HomeController extends Controller
 
     public function getProduct()
     {
-        $products = Product::all();
+        $products = Product::with('category', 'shop')->get();
         return view('product.index', compact('products'));
     }
 
     public function destroyProduct($id)
     {
         Product::find($id)->delete();
-        return redirect('/shop');
+        return redirect('/product');
     }
 
     //controllerTransactions
 
     public function getTransaction()
     {
-        $transactions = Transaction::all();
+        $transactions = Transaction::with('product', 'buying', 'buyer')->get();
         return view('transaction.index', compact('transactions'));
     }
 
     public function destroyTransaction($id)
     {
         Transaction::find($id)->delete();
-        return redirect('/shop');
+        return redirect('/transaction');
     }
 
     //controllerCarts
 
     public function getCart()
     {
-        $carts = Cart::all();
-        return view('cart.index', compact('carts'));
+        $carts = Cart::with('product', 'user')->get();
+        return view('/cart.index', compact('carts'));
     }
 
     public function destroyCart($id)

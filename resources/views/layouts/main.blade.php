@@ -25,7 +25,7 @@
                 <li><a href="/user">User</a></li>
                 <li><a href="/shop">Shop</a></li>
                 <li><a href="/product">Product</a></li>
-                <li><a href="/chart">Cart</a></li>
+                <li><a href="/cart">Cart</a></li>
                 <li><a href="/transaction">Transaction</a></li>
                 <li>
                     <!-- Dropdown Trigger -->
@@ -85,6 +85,10 @@
 
         $(document).ready(function () {
             $('.modal').modal();
+        });
+
+        $(document).ready(function(){
+            $('select').formSelect();
         });
 
     </script>

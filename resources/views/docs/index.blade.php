@@ -398,6 +398,20 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>/account/{id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil rekening berdasarkan id</td>
+                </tr>
+    
+                <tr>
+                    <td>/shop/account/{shop_id}</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil rekening berdasarkan id</td>
+                </tr>
+
+                <tr>
                     <td>/shop/account</td>
                     <td>POST</td>
                     <td>shop_id, nama_rekening, no_rekening, nama_bank, kode_bank</td>
@@ -405,24 +419,17 @@
                 </tr>
 
                 <tr>
-                    <td>/shop/account/{shop_id}</td>
-                    <td>POST</td>
+                    <td>/account/{id}</td>
+                    <td>PATCH</td>
                     <td>nama_rekening, no_rekening, nama_bank, kode_bank</td>
                     <td>Mengubah rekening pada shop</td>
                 </tr>
 
                 <tr>
-                    <td>/shop/account/{shop_id}</td>
-                    <td>GET</td>
-                    <td>-</td>
-                    <td>Mengambil rekening pada shop</td>
-                </tr>
-
-                <tr>
-                    <td>/shop/account/{shop_id}</td>
+                    <td>/account/{id}</td>
                     <td>DELETE</td>
                     <td>-</td>
-                    <td>Menghapus rekening pada shop</td>
+                    <td>Menghapus rekening berdasarkan id</td>
                 </tr>
 
             </tbody>

@@ -11,7 +11,7 @@ class ShopDetailController extends Controller
     public function addAccount(Request $request, ShopDetail $shopDetail)
     {
         $validator = Validator::make($request->all(), [
-            'shop_id' => 'required|integer|unique:shop_details',
+            'shop_id' => 'required|integer',
             'nama_rekening' => 'required|string',
             'no_rekening' => 'required|string',
             'nama_bank' => 'required|string',
@@ -37,7 +37,7 @@ class ShopDetailController extends Controller
         }
     }
 
-    public function updateAccount(Request $request, $shop_id)
+    public function updateAccount(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'nama_rekening' => 'string',
@@ -50,7 +50,7 @@ class ShopDetailController extends Controller
             return response($validator->errors());
         }
 
-        $shopDetail = ShopDetail::where('shop_id', $shop_id)->first();
+        $shopDetail = ShopDetail::where('id', $id)->first();
 
         if (!$shopDetail) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -69,9 +69,9 @@ class ShopDetailController extends Controller
         }
     }
 
-    public function getAccount($shop_id)
+    public function getAccount($id)
     {
-        $shopDetail = ShopDetail::where('shop_id', $shop_id)->first();
+        $shopDetail = ShopDetail::where('id', $id)->first();
 
         if (!$shopDetail) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -80,9 +80,20 @@ class ShopDetailController extends Controller
         return $this->sendResponse('success', 'Detail Toko Berhasil Diambil', $shopDetail, 200);
     }
 
-    public function deleteAccount($shop_id)
+    public function getShopAccount($shop_id)
     {
-        $shopDetail = ShopDetail::where('shop_id', $shop_id)->first();
+        $shopDetail = ShopDetail::where('shop_id', $shop_id)->get();
+
+        if ($shopDetail->isEmpty()) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Detail Toko Berhasil Diambil', $shopDetail, 200);
+    }
+
+    public function deleteAccount($id)
+    {
+        $shopDetail = ShopDetail::where('id', $id)->first();
 
         if (!$shopDetail) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);

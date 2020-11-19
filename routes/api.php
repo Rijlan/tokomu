@@ -72,10 +72,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/invoice/{id}', 'InvoiceController@delete');
 
     // Account
+    Route::get('/account/{id}', 'ShopDetailController@getAccount');
+    Route::get('/shop/account/{shop_id}', 'ShopDetailController@getShopAccount');
     Route::post('/shop/account', 'ShopDetailController@addAccount');
-    Route::patch('/shop/account/{shop_id}', 'ShopDetailController@updateAccount');
-    Route::get('/shop/account/{shop_id}', 'ShopDetailController@getAccount');
-    Route::delete('/shop/account/{shop_id}', 'ShopDetailController@deleteAccount');
+    Route::patch('/account/{id}', 'ShopDetailController@updateAccount');
+    Route::delete('/account/{id}', 'ShopDetailController@deleteAccount');
 });
 
 // Shop public

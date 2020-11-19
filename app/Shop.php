@@ -22,6 +22,6 @@ class Shop extends Model
 
     public function shopdetail()
     {
-        return $this->hasOne('App\ShopDetail');
+        return $this->hasMany('App\ShopDetail');
     }
 }

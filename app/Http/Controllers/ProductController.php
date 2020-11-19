@@ -11,12 +11,13 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // $products = Product::with('shop', 'category')->get();
-        $products = Product::with(['category' => function($query) {
-            $query->select('id', 'category');
-        }, 'shop' => function($query) {
-            $query->select('id', 'shop_name', 'image');
-        }])->get();
+        // // $products = Product::with('shop', 'category')->get();
+        // $products = Product::with(['category' => function($query) {
+        //     $query->select('id', 'category');
+        // }, 'shop' => function($query) {
+        //     $query->select('id', 'shop_name', 'image');
+        // }])->get();
+        $products = Product::all();
         
         if ($products->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -155,11 +156,12 @@ class ProductController extends Controller
 
     public function getProductByCategory($id)
     {
-        $products = Product::where('category_id', $id)->with(['category' => function($query) {
-            $query->select('id', 'category');
-        }, 'shop' => function($query) {
-            $query->select('id', 'shop_name', 'image');
-        }])->get();
+        // $products = Product::where('category_id', $id)->with(['category' => function($query) {
+        //     $query->select('id', 'category');
+        // }, 'shop' => function($query) {
+        //     $query->select('id', 'shop_name', 'image');
+        // }])->get();
+        $products = Product::where('category_id', $id)->get();
         
         if ($products->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);

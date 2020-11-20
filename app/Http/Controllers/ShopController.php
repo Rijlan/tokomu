@@ -36,7 +36,7 @@ class ShopController extends Controller
 
     public function myShop($user_id)
     {
-        $shop = Shop::where('user_id', $user_id)->with('owner')->first();
+        $shop = Shop::where('user_id', $user_id)->with('owner', 'shopdetail')->first();
 
         if (!$shop) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -53,7 +53,7 @@ class ShopController extends Controller
 
         $validator = Validator::make($request->all(), [
             'shop_name' => 'string|max:255',
-            'description' => 'string|max:255',
+            'description' => 'string',
         ]);
 
         if ($validator->fails()) {
@@ -68,10 +68,21 @@ class ShopController extends Controller
             $result = array_filter($data);
 
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $image = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
-                
-                $file->move(public_path('uploads/shops'), $image);
+                $file = base64_encode(file_get_contents($request->image));
+
+                $client = new \GuzzleHttp\Client();
+                $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                    'form_params' => [
+                        'key' => '6d207e02198a847aa98d0a2a901485a5',
+                        'action' => 'upload',
+                        'source' => $file,
+                        'format' => 'json'
+                    ]
+                ]);
+
+                $data = $response->getBody()->getContents();
+                $data = json_decode($data);
+                $image = $data->image->url;
 
                 $shop->image = $image;
             }
@@ -88,10 +99,21 @@ class ShopController extends Controller
             $shop->shop_name = $request->shop_name;
             $shop->description = $request->description;
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $image = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
+                $file = base64_encode(file_get_contents($request->image));
 
-                $file->move(public_path('uploads/shops'), $image);
+                $client = new \GuzzleHttp\Client();
+                $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                    'form_params' => [
+                        'key' => '6d207e02198a847aa98d0a2a901485a5',
+                        'action' => 'upload',
+                        'source' => $file,
+                        'format' => 'json'
+                    ]
+                ]);
+
+                $data = $response->getBody()->getContents();
+                $data = json_decode($data);
+                $image = $data->image->url;
 
                 $shop->image = $image;
             }

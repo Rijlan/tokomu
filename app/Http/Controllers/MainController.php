@@ -11,8 +11,8 @@ class MainController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->keyword;
-        $products = Product::where('product_name', 'LIKE', '%' . $keyword . '%')->get();
-        $shops = Shop::where('shop_name', 'LIKE', '%' . $keyword . '%')->get();
+        $products = Product::whereRaw('LOWER(product_name) LIKE ?', ['%' . strtolower($keyword) . '%'])->get();
+        $shops = Shop::whereRaw('LOWER(shop_name) LIKE ?', ['%' . strtolower($keyword) . '%'])->get();
 
         if ($products->isEmpty() && $shops->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);

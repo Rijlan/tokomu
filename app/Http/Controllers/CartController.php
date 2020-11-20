@@ -17,7 +17,9 @@ class CartController extends Controller
             return $this->sendResponse('error', 'User Tidak Ada', null, 404);
         }
 
-        $carts = Cart::where('user_id', $id)->with('product')->get();
+        $carts = Cart::where('user_id', $id)->with(['product' => function($query) {
+            $query->select('id', 'product_name', 'price', 'stock', 'image', 'category_id', 'shop_id');
+        }])->get();
 
         if ($carts->isEmpty()) {
             return $this->sendResponse('error', 'Carts Tidak Ada', null, 404);

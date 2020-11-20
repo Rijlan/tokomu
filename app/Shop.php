@@ -9,6 +9,7 @@ class Shop extends Model
     protected $fillable = ['shop_name', 'description', 'image', 'user_id'];
     
     // protected $hidden = ['user_id'];
+    protected $hidden = ['created_at', 'updated_at'];
     
     public function owner()
     {
@@ -18,5 +19,10 @@ class Shop extends Model
     public function products()
     {
         return $this->hasManyThrough('App\Product', 'App\User');
+    }
+
+    public function shopdetail()
+    {
+        return $this->hasMany('App\ShopDetail');
     }
 }

@@ -35,7 +35,7 @@
                             <td>{{ $product->category->category }}</td>
                             <td>{{ $product->shop->shop_name }}</td>
                             <td>{{ $product->stock }}</td>
-                            <td><img src="{{ asset('uploads/products') }}/{{ $product->image }}" alt="{{ $product->image }}" width="80px"></td>
+                            <td><img src="{{ $product->image }}" alt="{{ $product->image }}" width="80px"></td>
                             <td class="center">
                                 <form action="/product/{{ $product->id }}" style="display: inline-block;"
                                     method="POST">

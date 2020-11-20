@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
+use App\Invoice;
 use App\Product;
+use App\Shop;
 use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
@@ -30,12 +33,14 @@ class TransactionController extends Controller
     public function getTransaction($id)
     {
         $transaction = Transaction::where('id', $id)->with('product')->first();
+        
+        $shop = Shop::where('id', $transaction->product->shop_id)->with('shopdetail')->first();
 
         if (!$transaction) {
             return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
         }
 
-        return $this->sendResponse('success', 'Data Berhasil Diambil', $transaction, 200);
+        return $this->sendResponse('success', 'Data Berhasil Diambil', compact('transaction', 'shop'), 200);
     }
 
     public function addTransaction(Request $request, Transaction $transaction)
@@ -43,7 +48,7 @@ class TransactionController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
             'product_id' => 'required|integer',
-            'qty' => 'required|integer'
+            'qty' => 'required|integer|min:0|not_in:0'
         ]);
 
         if ($validator->fails()) {
@@ -61,6 +66,13 @@ class TransactionController extends Controller
         if (!$product) {
             return $this->sendResponse('error', 'Data Produk Tidak Ada', null, 404);
         }
+        
+        if ($product->stock < $request->qty) {
+            return $this->sendResponse('error', 'Stok Tidak Cukup', null, 404);
+        } else {
+            $product->stock = $product->stock - $request->qty;
+            $product->save();
+        }
 
         $shop_id = Product::select('shop_id')->where('id', $request->product_id)->get();
 
@@ -72,6 +84,12 @@ class TransactionController extends Controller
         $transaction->qty = $request->qty;
         $transaction->total = $request->qty * $product->price;
         $transaction->status = 'pending';
+
+        $cart = Cart::where('user_id', $request->user_id)->where('product_id', $request->product_id)->first();
+        if (!$cart) {
+            return $this->sendResponse('error', 'Cart Tidak Ada', null, 500);
+        }
+        $cart->delete();
 
         try {
             $transaction->save();
@@ -107,6 +125,42 @@ class TransactionController extends Controller
             return $this->sendResponse('success', 'Status Berhasil Diupdate', $transaction, 200);
         } catch (\Throwable $th) {
             return $this->sendResponse('error', 'Status Gagal Diupdate', $th->getMessage(), 500);
+        }
+    }
+
+    public function approveTransaction(Request $request)
+    {
+        $transaction = Transaction::find($request->transaction_id);
+
+        if (!$transaction) {
+            return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
+        }
+
+        $transaction->status = 'proccess';
+        $transaction->save();
+
+        $validator = Validator::make($request->all(), [
+            'transaction_id' => 'required|unique:invoices',
+            'receipt' => 'required|string|unique:invoices',
+            'delivery_service' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response($validator->errors());
+        }
+
+        $invoice = new Invoice;
+
+        $invoice->transaction_id = $request->transaction_id;
+        $invoice->receipt = $request->receipt;
+        $invoice->delivery_service = $request->delivery_service;
+
+        try {
+            $invoice->save();
+            
+            return $this->sendResponse('success', 'Pembayaran Dikonfirmasi', $invoice, 200);
+        } catch (\Throwable $th) {
+            return $this->sendResponse('error', 'Pembayaran Dikonfirmasi', $th->getMessage(), 500);
         }
     }
 }

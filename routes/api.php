@@ -39,6 +39,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Shop
     Route::post('/shop', 'ShopController@setShop');
     Route::get('/shop/{shop_id}/transaction', 'ShopController@getMyTransaction');
+    Route::get('/shop/{shop_id}/payment', 'PaymentProofController@getPaymentProofShop');
     Route::get('/myshop/{user_id}', 'ShopController@myShop');
 
     // Product
@@ -57,6 +58,25 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/transaction/{id}', 'TransactionController@getTransaction');
     Route::post('/transaction', 'TransactionController@addTransaction');
     Route::patch('/transaction/{id}', 'TransactionController@setStatusTransaction');
+    Route::post('/transaction/approve', 'TransactionController@approveTransaction');
+
+    // Payment
+    Route::get('/payment/{id}', 'PaymentProofController@getPaymentProof');
+    Route::get('/payment/transaction/{id}', 'PaymentProofController@getPaymentProofTransaction');
+    Route::post('/payment', 'PaymentProofController@addPaymentProof');
+
+    // Invoice
+    Route::get('/invoice/{id}', 'InvoiceController@getInvoice');
+    Route::get('/invoice/transaction/{id}', 'InvoiceController@getTransactionInvoice');
+    Route::patch('/invoice/{id}', 'InvoiceController@update');
+    Route::delete('/invoice/{id}', 'InvoiceController@delete');
+
+    // Account
+    Route::get('/account/{id}', 'ShopDetailController@getAccount');
+    Route::get('/shop/account/{shop_id}', 'ShopDetailController@getShopAccount');
+    Route::post('/shop/account', 'ShopDetailController@addAccount');
+    Route::patch('/account/{id}', 'ShopDetailController@updateAccount');
+    Route::delete('/account/{id}', 'ShopDetailController@deleteAccount');
 });
 
 // Shop public
@@ -68,6 +88,7 @@ Route::post('/shop/{id}/category', 'ShopController@getProductsByCategory');
 // Product public
 Route::get('/product', 'ProductController@index');
 Route::get('/product/{id}', 'ProductController@show');
+Route::get('/product/category/{id}', 'ProductController@getProductByCategory');
 
 // Category public
 Route::get('/categories', 'CategoryController@getCategories');

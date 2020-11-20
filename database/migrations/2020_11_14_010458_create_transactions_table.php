@@ -23,9 +23,9 @@ class CreateTransactionsTable extends Migration
             $table->enum('status', ['pending', 'proccess', 'done']);
             $table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
         });
     }
 

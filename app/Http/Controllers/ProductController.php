@@ -11,12 +11,13 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // $products = Product::with('shop', 'category')->get();
-        $products = Product::with(['category' => function($query) {
-            $query->select('id', 'category');
-        }, 'shop' => function($query) {
-            $query->select('id', 'shop_name', 'image');
-        }])->get();
+        // // $products = Product::with('shop', 'category')->get();
+        // $products = Product::with(['category' => function($query) {
+        //     $query->select('id', 'category');
+        // }, 'shop' => function($query) {
+        //     $query->select('id', 'shop_name', 'image');
+        // }])->get();
+        $products = Product::all();
         
         if ($products->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -61,10 +62,28 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->stock = $request->stock;
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $image = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
+            // $file = $request->file('image');
+            // $image = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
             
-            $file->move(public_path('uploads/products'), $image);
+            // $file->move(public_path('uploads/products'), $image);
+
+            // $product->image = $image;
+
+            $file = base64_encode(file_get_contents($request->image));
+
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $file,
+                    'format' => 'json'
+                ]
+            ]);
+
+            $data = $response->getBody()->getContents();
+            $data = json_decode($data);
+            $image = $data->image->url;
 
             $product->image = $image;
         }
@@ -89,10 +108,22 @@ class ProductController extends Controller
         $result = array_filter($data);
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $image = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
-            
-            $file->move(public_path('uploads/products'), $image);
+
+            $file = base64_encode(file_get_contents($request->image));
+
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $file,
+                    'format' => 'json'
+                ]
+            ]);
+
+            $data = $response->getBody()->getContents();
+            $data = json_decode($data);
+            $image = $data->image->url;
 
             $product->image = $image;
         }
@@ -121,5 +152,21 @@ class ProductController extends Controller
         } catch (\Throwable $th) {
             return $this->sendResponse('error', 'Produk Gagal Dihapus', null, 404);
         }
+    }
+
+    public function getProductByCategory($id)
+    {
+        // $products = Product::where('category_id', $id)->with(['category' => function($query) {
+        //     $query->select('id', 'category');
+        // }, 'shop' => function($query) {
+        //     $query->select('id', 'shop_name', 'image');
+        // }])->get();
+        $products = Product::where('category_id', $id)->get();
+        
+        if ($products->isEmpty()) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data Berhasil Diambil', $products, 200);
     }
 }

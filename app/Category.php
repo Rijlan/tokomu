@@ -9,4 +9,5 @@ class Category extends Model
     protected $fillable = ['category'];
 
     // protected $hidden = ['id'];
+    protected $hidden = ['created_at', 'updated_at'];
 }

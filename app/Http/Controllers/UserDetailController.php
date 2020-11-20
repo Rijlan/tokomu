@@ -48,16 +48,23 @@ class UserDetailController extends Controller
         $userDetail->phone_number = $request->phone_number;
         $userDetail->address = $request->address;
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $avatar = Str::slug($file->getClientOriginalName(), '-') . time() . '.' . $file->getClientOriginalExtension();
+            $file = base64_encode(file_get_contents($request->image));
 
-            // storage heroku error
-            // $file->storeAs('public/products', $avatar);
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $file,
+                    'format' => 'json'
+                ]
+            ]);
 
-            // public
-            $file->move(public_path('uploads/avatars'), $avatar);
+            $data = $response->getBody()->getContents();
+            $data = json_decode($data);
+            $image = $data->image->url;
 
-            $userDetail->avatar = $avatar;
+            $userDetail->image = $image;
         }
 
         try {

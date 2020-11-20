@@ -291,7 +291,7 @@
                 <tr>
                     <td>/transaction/{id}</td>
                     <td>PATCH</td>
-                    <td>status(pending, proccess, done)</td>
+                    <td>status(belum dibayar, diproses, dikirim, selesai, dibatalkan)</td>
                     <td>Mengubah status transaksi</td>
                 </tr>
 
@@ -300,6 +300,20 @@
                     <td>POST</td>
                     <td>transaction_id, receipt, delivery_service</td>
                     <td>Mengkonfirmasi Pembayaran</td>
+                </tr>
+
+                <tr>
+                    <td>/shop/{shop_id}/transaction/status</td>
+                    <td>POST</td>
+                    <td>status(belum dibayar, diproses, dikirim, selesai, dibatalkan)</td>
+                    <td>Mengambil list transaksi pada toko berdasarkan statusnya</td>
+                </tr>
+
+                <tr>
+                    <td>/transaction/{id}</td>
+                    <td>DELETE</td>
+                    <td>-</td>
+                    <td>Menghapus data transaksi berdasarkan id</td>
                 </tr>
 
             </tbody>

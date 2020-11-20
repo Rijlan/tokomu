@@ -41,6 +41,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/shop/{shop_id}/transaction', 'ShopController@getMyTransaction');
     Route::get('/shop/{shop_id}/payment', 'PaymentProofController@getPaymentProofShop');
     Route::get('/myshop/{user_id}', 'ShopController@myShop');
+    Route::post('/shop/{shop_id}/transaction/status', 'TransactionController@getTransactionByStatus');
 
     // Product
     Route::post('/product', 'ProductController@store');
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/transaction', 'TransactionController@addTransaction');
     Route::patch('/transaction/{id}', 'TransactionController@setStatusTransaction');
     Route::post('/transaction/approve', 'TransactionController@approveTransaction');
+    Route::delete('/transaction/{id}', 'TransactionController@destroy');
 
     // Payment
     Route::get('/payment/{id}', 'PaymentProofController@getPaymentProof');

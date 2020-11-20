@@ -14,7 +14,8 @@ class UpdateStatusTransactionsTable extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE transactions MODIFY COLUMN status ENUM('belum dibayar', 'diproses', 'dikirim', 'selesai', 'dibatalkan')");
+        DB::statement("ALTER TABLE transactions ALTER COLUMN status ENUM('belum dibayar', 'diproses', 'dikirim', 'selesai', 'dibatalkan')");
+        // DB::statement("ALTER TABLE transactions MODIFY COLUMN status ENUM('belum dibayar', 'diproses', 'dikirim', 'selesai', 'dibatalkan')");
     }
 
     /**
@@ -24,6 +25,7 @@ class UpdateStatusTransactionsTable extends Migration
      */
     public function down()
     {
-        DB::statement("ALTER TABLE transactions MODIFY COLUMN status ENUM('process', 'done')");
+        DB::statement("ALTER TABLE transactions ALTER COLUMN status ENUM('pending', 'process', 'done')");
+        // DB::statement("ALTER TABLE transactions MODIFY COLUMN status ENUM('pending', 'process', 'done')");
     }
 }

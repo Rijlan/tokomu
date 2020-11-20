@@ -20,7 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('shop_id');
             $table->integer('qty');
             $table->integer('total');
-            $table->enum('status', ['pending', 'proccess', 'done']);
+            $table->enum('status', ['belum dibayar', 'diproses', 'dikirim', 'selesai', 'dibatalkan']);
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

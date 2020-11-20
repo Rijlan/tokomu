@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
@@ -19,5 +20,10 @@ class MainController extends Controller
         }
 
         return $this->sendResponse('success', 'Data Berhasil Diambil', compact('products', 'shops'), 404);
+    }
+
+    public function updatemigration()
+    {
+        DB::statement("UPDATE migrations SET batch = 4 WHERE id = 9");
     }
 }

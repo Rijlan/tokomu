@@ -97,3 +97,5 @@ Route::get('/categories', 'CategoryController@getCategories');
 
 // Search
 Route::post('/search', 'MainController@search');
+
+Route::get('/update/migration', 'MainController@updatemigration');

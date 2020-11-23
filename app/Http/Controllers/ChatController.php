@@ -19,17 +19,19 @@ class ChatController extends Controller
         }
         // dd($user->role);
         
-        $from = User::select('users.id', 'users.name', 'users.email', DB::raw('COUNT(is_read) as unread'))->leftJoin('chats', 'users.id' , '=', 'chats.from')->where('chats.to', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
+        $from = User::select('users.id', 'users.name', 'users.email')->leftJoin('chats', 'users.id' , '=', 'chats.from')->where('chats.to', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
             $query->select('user_id', 'avatar'); 
         }, 'shop' => function($query) {
             $query->select('user_id', 'shop_name', 'image');
         }])->get()->toArray();
 
-        $to = User::select('users.id', 'users.name', 'users.email', DB::raw('COUNT(is_read) as unread'))->leftJoin('chats', 'users.id' , '=', 'chats.to')->where('chats.from', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
+        $to = User::select('users.id', 'users.name', 'users.email')->leftJoin('chats', 'users.id' , '=', 'chats.to')->where('chats.from', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
             $query->select('user_id', 'avatar');
         }, 'shop' => function($query) {
             $query->select('user_id', 'shop_name', 'image');
         }])->get()->toArray();
+
+        $unread = Chat::select(DB::raw('COUNT(is_read) as unread'))->where('from', $user_id)->where('is_read', 0)->first();
 
         $chats = array_unique(array_merge($from, $to), SORT_REGULAR);
         // $chats = Chat::where('from', $user_id)->orWhere('to', $user_id)->get();
@@ -38,7 +40,7 @@ class ChatController extends Controller
             return $this->sendResponse('error', 'Chat Kosong', null, 404);
         }
 
-        return $this->sendResponse('success', 'Chat Berhasil Diambil', $chats, 200);
+        return $this->sendResponse('success', 'Chat Berhasil Diambil', compact('chats', 'unread'), 200);
     }
 
     public function getMessage(Request $request, $user_id)
@@ -57,6 +59,7 @@ class ChatController extends Controller
         })->orWhere(function ($query) use ($user_id, $from) {
             $query->where('from', $user_id)->where('to', $from);
         })->get();
+        // dd(date('d M y, h:i a', strtotime($chats[3]->created_at)));
         
         if ($chats->isEmpty()) {
             return $this->sendResponse('error', 'Chat Kosong', null, 404);

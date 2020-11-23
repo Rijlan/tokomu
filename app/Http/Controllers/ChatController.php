@@ -17,13 +17,18 @@ class ChatController extends Controller
         if (!$user) {
             return $this->sendResponse('error', 'User Tidak Ada', null, 404);
         }
+        // dd($user->role);
         
         $from = User::select('users.id', 'users.name', 'users.email', DB::raw('COUNT(is_read) as unread'))->leftJoin('chats', 'users.id' , '=', 'chats.from')->where('chats.to', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
             $query->select('user_id', 'avatar'); 
+        }, 'shop' => function($query) {
+            $query->select('user_id', 'shop_name', 'image');
         }])->get()->toArray();
 
         $to = User::select('users.id', 'users.name', 'users.email', DB::raw('COUNT(is_read) as unread'))->leftJoin('chats', 'users.id' , '=', 'chats.to')->where('chats.from', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
-            $query->select('user_id', 'avatar'); 
+            $query->select('user_id', 'avatar');
+        }, 'shop' => function($query) {
+            $query->select('user_id', 'shop_name', 'image');
         }])->get()->toArray();
 
         $chats = array_unique(array_merge($from, $to), SORT_REGULAR);

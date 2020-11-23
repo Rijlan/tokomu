@@ -88,4 +88,21 @@ class ChatController extends Controller
             return $this->sendResponse('error', 'Chat Gagal Dikirim', $th->getMessage(), 500);
         }
     }
+
+    public function destroyMessage($id)
+    {
+        $chat = Chat::find($id);
+
+        if (!$chat) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        try {
+            $chat->delete();
+
+            return $this->sendResponse('success', 'Chat Dihapus', null, 200);
+        } catch (\Throwable $th) {
+            return $this->sendResponse('error', 'Chat Gagal Dihapus', null, 404);
+        }
+    }
 }

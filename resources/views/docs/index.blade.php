@@ -468,21 +468,27 @@
                     <td>-</td>
                     <td>Mengambil list yang pernah chat</td>
                 </tr>
-
+                
                 <tr>
                     <td>/chat/user/{user_id}</td>
                     <td>POST</td>
                     <td>from</td>
                     <td>Mengambil chat dari user yang login dan satunya</td>
                 </tr>
-
+                
                 <tr>
                     <td>/chat/send/{user_id}</td>
                     <td>POST</td>
                     <td>to, chat</td>
                     <td>Mengirim chat</td>
                 </tr>
-
+                
+                <tr>
+                    <td>/chat/{chat_id}</td>
+                    <td>DELETE</td>
+                    <td>-</td>
+                    <td>Menghapus chat berdasarkan id</td>
+                </tr>
             </tbody>
         </table>
 

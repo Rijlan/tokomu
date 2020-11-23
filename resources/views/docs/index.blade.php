@@ -452,6 +452,43 @@
         <table>
             <thead>
                 <tr>
+                    <th colspan="4" class="center"><h5>Chat</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/user/{user_id}/chat</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil list yang pernah chat</td>
+                </tr>
+
+                <tr>
+                    <td>/chat/user/{user_id}</td>
+                    <td>POST</td>
+                    <td>from</td>
+                    <td>Mengambil chat dari user yang login dan satunya</td>
+                </tr>
+
+                <tr>
+                    <td>/chat/send/{user_id}</td>
+                    <td>POST</td>
+                    <td>to, chat</td>
+                    <td>Mengirim chat</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
                     <th colspan="4" class="center"><h5>Other</h5></th>
                 </tr>
                 <tr>

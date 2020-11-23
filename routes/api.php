@@ -79,6 +79,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/shop/account', 'ShopDetailController@addAccount');
     Route::patch('/account/{id}', 'ShopDetailController@updateAccount');
     Route::delete('/account/{id}', 'ShopDetailController@deleteAccount');
+
+    // Chat
+    Route::get('/user/{user_id}/chat', 'ChatController@index');
+    Route::post('/chat/user/{user_id}', 'ChatController@getMessage');
+    Route::post('/chat/send/{user_id}', 'ChatController@sendMessage');
 });
 
 // Shop public

@@ -78,7 +78,7 @@ class PaymentProofController extends Controller
 
             return $this->sendResponse('success', 'Bukti Pembayaran Ditambah', $payment, 200);
         } catch (\Throwable $th) {
-            return $this->sendResponse('error', 'Bukti Pembayaran Ditambah', $th->getMessage(), 500);
+            return $this->sendResponse('error', 'Bukti Pembayaran Gagal Ditambah', $th->getMessage(), 500);
         }
     }
 }

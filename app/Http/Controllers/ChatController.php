@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Pusher\Pusher;
 
 class ChatController extends Controller
 {
@@ -91,7 +92,23 @@ class ChatController extends Controller
         try {
             $chat->save();
 
-            return $this->sendResponse('success', 'Chat Dikirim', $chat, 200);
+            // pusher
+            $options = [
+                'cluster' => 'ap1',
+                'useTLS'=> true
+            ];
+
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                $options
+            );
+
+            // $data = ['from' => $user_id, 'to' => $request->to]; // sending from and to user id when enter
+            $pusher->trigger('my-channel', 'my-event', $chat);
+
+            // return $this->sendResponse('success', 'Chat Dikirim', $chat, 200);
         } catch (\Throwable $th) {
             return $this->sendResponse('error', 'Chat Gagal Dikirim', $th->getMessage(), 500);
         }

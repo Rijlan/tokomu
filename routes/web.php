@@ -47,6 +47,7 @@ Route::delete('/shop/{id}', 'HomeController@destroyShop');
 
 //route products
 Route::get('/product', 'HomeController@getProduct');
+Route::get('/product/{id}', 'HomeController@detailProduct');
 Route::delete('/product/{id}', 'HomeController@destroyProduct');
 
 //route transactions

@@ -21,7 +21,6 @@
                         <th>category</th>
                         <th>shop</th>
                         <th>Stock</th>
-                        <th>Image</th>
                         <th class="center">Action</th>
                     </tr>
                 </thead>
@@ -35,8 +34,10 @@
                             <td>{{ $product->category->category }}</td>
                             <td>{{ $product->shop->shop_name }}</td>
                             <td>{{ $product->stock }}</td>
-                            <td><img src="{{ $product->image }}" alt="{{ $product->image }}" width="80px"></td>
                             <td class="center">
+                                <a href="/product/{{ $product->id }}">
+                                    <button class="btn black"><i class="material-icons">remove_red_eye</i></button>
+                                </a>
                                 <form action="/product/{{ $product->id }}" style="display: inline-block;"
                                     method="POST">
                                     @csrf

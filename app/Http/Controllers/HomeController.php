@@ -13,6 +13,7 @@ use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Builder\Function_;
 
 class HomeController extends Controller
 {
@@ -132,6 +133,12 @@ class HomeController extends Controller
     {
         $products = Product::with('category', 'shop')->get();
         return view('product.index', compact('products'));
+    }
+
+    public function detailProduct($id)
+    {
+        $product = Product::where('id', $id)->with('category', 'shop')->first();
+        return view('product.detail', compact('product'));
     }
 
     public function destroyProduct($id)

@@ -48,7 +48,8 @@ class UserDetailController extends Controller
         $userDetail->phone_number = $request->phone_number;
         $userDetail->address = $request->address;
         if ($request->hasFile('avatar')) {
-            $file = base64_encode(file_get_contents($request->image));
+            $image = $request->file('avatar');
+            $file = base64_encode(file_get_contents($image));
 
             $client = new \GuzzleHttp\Client();
             $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
@@ -64,7 +65,7 @@ class UserDetailController extends Controller
             $data = json_decode($data);
             $image = $data->image->url;
 
-            $userDetail->image = $image;
+            $userDetail->avatar = $image;
         }
 
         try {
@@ -74,7 +75,7 @@ class UserDetailController extends Controller
 
             return $this->sendResponse('success', 'Detail Berhasil Ditambah', compact('user'), 200);
         } catch (\Throwable $th) {
-            return $this->sendResponse('error', 'Detail Gagal Ditambah', null, 500);
+            return $this->sendResponse('error', 'Detail Gagal Ditambah', $th->getMessage(), 500);
         }
     }
 

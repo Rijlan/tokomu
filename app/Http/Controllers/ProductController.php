@@ -37,7 +37,7 @@ class ProductController extends Controller
         $product = Product::where('id', $id)->with(['category' => function($query) {
             $query->select('id', 'category');
         }, 'shop' => function($query) {
-            $query->select('id', 'shop_name', 'image');
+            $query->select('id', 'shop_name', 'image', 'user_id');
         }])->first();
         return $this->sendResponse('success', 'Data Berhasil Diambil', $product, 200);
     }

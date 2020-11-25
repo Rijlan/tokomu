@@ -8,37 +8,32 @@
     </div>
 @endif
 <div class="container">
-    <h4 class="center">Product</h4>
+    <h4 class="center">Shop Detail</h4>
     <div class="row">
         <div class="col s12 m12 l12">
             <table>
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Product Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>category</th>
-                        <th>shop</th>
-                        <th>Stock</th>
+                        <th>ID Shop</th>
+                        <th>Nama Rekening</th>
+                        <th>No Rekening</th>
+                        <th>Nama Bank</th>
+                        <th>Kode Bank</th>
                         <th class="center">Action</th>
                     </tr>
                 </thead>
-                @foreach($products as $key => $product)
+                @foreach($shopDetails as $key => $shopDetail)
                     <tbody>
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $product->product_name }}</td>
-                            <td>{{ $product->description }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>{{ $product->category->category }}</td>
-                            <td>{{ $product->shop->shop_name }}</td>
-                            <td>{{ $product->stock }}</td>
+                            <td>{{ $shopDetail->shop_id }}</td>
+                            <td>{{ $shopDetail->nama_rekening }}</td>
+                            <td>{{ $shopDetail->no_rekening }}</td>
+                            <td>{{ $shopDetail->nama_bank }}</td>
+                            <td>{{ $shopDetail->kode_bank }}</td>
                             <td class="center">
-                                <a href="/product/{{ $product->id }}">
-                                    <button class="btn black"><i class="material-icons">remove_red_eye</i></button>
-                                </a>
-                                <form action="/product/{{ $product->id }}" style="display: inline-block;"
+                                <form action="/shopDetail/{{ $shopDetail->id }}" style="display: inline-block;"
                                     method="POST">
                                     @csrf
                                     @method('delete')

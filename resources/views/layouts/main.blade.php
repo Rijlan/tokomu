@@ -23,10 +23,19 @@
             <ul class="right hide-on-med-and-down">
                 <li><a href="/category">Category</a></li>
                 <li><a href="/user">User</a></li>
-                <li><a href="/shop">Shop</a></li>
+                <li>
+                    <a class='dropdown-trigger btn grey lighten-3 black-text' href='#' data-target='dropdown1'>Shops</a>
+                    
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="/shop">Shop</a></li>
+                        <li><a href="/shopDetail">Shop Detail</a></li>
+                    </ul>
+                </li>
                 <li><a href="/product">Product</a></li>
                 <li><a href="/cart">Cart</a></li>
                 <li><a href="/transaction">Transaction</a></li>
+                <li><a href="/paymentProof">Payment</a></li>
+                <li><a href="/invoice">Invoice</a></li>
                 <li>
                     <!-- Dropdown Trigger -->
                     <a class="dropdown-trigger btn grey lighten-3 black-text" href="#"
@@ -50,9 +59,12 @@
         <li><a href="/category">Category</a></li>
         <li><a href="/user">User</a></li>
         <li><a href="/shop">Shop</a></li>
+        <li><a href="/shopDetail">Shop Detail</a></li>
         <li><a href="/product">Product</a></li>
         <li><a href="/cart">Cart</a></li>
         <li><a href="/transaction">Transaction</a></li>
+        <li><a href="/paymentProof">Payment Proof</a></li>
+        <li><a href="/invoice">Invoice</a></li>
         <li>
             <!-- Dropdown Trigger -->
             <a class="dropdown-trigger btn grey lighten-3 black-text" href="#"

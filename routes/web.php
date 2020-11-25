@@ -47,6 +47,7 @@ Route::delete('/shop/{id}', 'HomeController@destroyShop');
 
 //route products
 Route::get('/product', 'HomeController@getProduct');
+Route::get('/product/{id}', 'HomeController@detailProduct');
 Route::delete('/product/{id}', 'HomeController@destroyProduct');
 
 //route transactions
@@ -56,5 +57,17 @@ Route::delete('/transaction/{id}', 'HomeController@destroyTransaction');
 //route carts
 Route::get('/cart', 'HomeController@getCart');
 Route::delete('/cart', 'HomeController@destroyCart');
+
+//route shopdetails
+Route::get('/shopDetail', 'HomeController@getShopDetail');
+Route::delete('/shopDetail', 'HomeController@destroyShopDetail');
+
+//route paymentproofs
+Route::get('/paymentProof', 'HomeController@getPaymentProof');
+Route::delete('/paymentProof', 'HomeController@destroyPaymentProof');
+
+//route Invoice
+Route::get('/invoice', 'HomeController@getInvoice');
+Route::delete('/invoice', 'HomeController@destroyInvoice');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -6,10 +6,14 @@ use App\Product;
 use App\Shop;
 use App\User;
 use App\Cart;
+use App\Invoice;
+use App\PaymentProof;
+use App\ShopDetail;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Builder\Function_;
 
 class HomeController extends Controller
 {
@@ -87,9 +91,7 @@ class HomeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'         => 'required|string',
-            'email'        => 'required|string',
-            'password'     => 'required|string',
-            'role'         => 'required|integer'
+            'email'        => 'rShopDeequired|integer'
         ]);
 
         if ($validator->fails()) {
@@ -133,6 +135,12 @@ class HomeController extends Controller
         return view('product.index', compact('products'));
     }
 
+    public function detailProduct($id)
+    {
+        $product = Product::where('id', $id)->with('category', 'shop')->first();
+        return view('product.detail', compact('product'));
+    }
+
     public function destroyProduct($id)
     {
         Product::find($id)->delete();
@@ -166,4 +174,42 @@ class HomeController extends Controller
         Cart::find($id)->delete();
         return redirect('/cart');
     }
+
+    public function getShopdetail()
+    {
+        $shopDetails = ShopDetail::select('shop_id', 'nama_rekening', 'no_rekening', 'nama_bank','kode_bank')->get();
+        return view('/shopDetail.index', compact('shopDetails'));
+    }
+
+    public function destroyShopDetail($id)
+    {
+        ShopDetail::find($id)->delete();
+        return redirect('/shopDetail');
+    }
+    
+    public function getPaymentproof()
+    {
+        $paymentProofs = PaymentProof::with('transaction')->get();
+        return view('/paymentProof.index', compact('paymentProofs'));
+    }
+
+    public function destroyPaymentproof($id)
+    {
+        PaymentProof::find($id);
+        redirect('/paymentProof');
+    }
+
+    public function getInvoice()
+    {
+        $invoices = Invoice::with('transaction')->get();
+        return view('/invoice.index', compact('invoices'));
+    }
+
+    public function destroyInvoice($id)
+    {
+        Invoice::find($id)->delete();
+        return redirect('/Invoice');
+    }
+
+
 }

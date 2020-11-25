@@ -52,4 +52,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne('App\UserDetail', 'user_id', 'id');
     }
+
+    public function shop()
+    {
+        return $this->hasOne('App\Shop', 'user_id', 'id');
+    }
 }

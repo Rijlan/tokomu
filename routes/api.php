@@ -41,6 +41,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/shop/{shop_id}/transaction', 'ShopController@getMyTransaction');
     Route::get('/shop/{shop_id}/payment', 'PaymentProofController@getPaymentProofShop');
     Route::get('/myshop/{user_id}', 'ShopController@myShop');
+    Route::post('/shop/{shop_id}/transaction/status', 'TransactionController@getTransactionByStatus');
 
     // Product
     Route::post('/product', 'ProductController@store');
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/transaction', 'TransactionController@addTransaction');
     Route::patch('/transaction/{id}', 'TransactionController@setStatusTransaction');
     Route::post('/transaction/approve', 'TransactionController@approveTransaction');
+    Route::delete('/transaction/{id}', 'TransactionController@destroy');
 
     // Payment
     Route::get('/payment/{id}', 'PaymentProofController@getPaymentProof');
@@ -77,6 +79,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/shop/account', 'ShopDetailController@addAccount');
     Route::patch('/account/{id}', 'ShopDetailController@updateAccount');
     Route::delete('/account/{id}', 'ShopDetailController@deleteAccount');
+
+    // Chat
+    Route::get('/user/{user_id}/chat', 'ChatController@index');
+    Route::post('/chat/user/{user_id}', 'ChatController@getMessage');
+    Route::post('/chat/send/{user_id}', 'ChatController@sendMessage');
+    Route::delete('/chat/{id}', 'ChatController@destroyMessage');
 });
 
 // Shop public

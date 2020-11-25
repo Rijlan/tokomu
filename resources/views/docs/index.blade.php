@@ -291,7 +291,7 @@
                 <tr>
                     <td>/transaction/{id}</td>
                     <td>PATCH</td>
-                    <td>status(pending, proccess, done)</td>
+                    <td>status(belum dibayar, diproses, dikirim, selesai, dibatalkan)</td>
                     <td>Mengubah status transaksi</td>
                 </tr>
 
@@ -300,6 +300,20 @@
                     <td>POST</td>
                     <td>transaction_id, receipt, delivery_service</td>
                     <td>Mengkonfirmasi Pembayaran</td>
+                </tr>
+
+                <tr>
+                    <td>/shop/{shop_id}/transaction/status</td>
+                    <td>POST</td>
+                    <td>status(belum dibayar, diproses, dikirim, selesai, dibatalkan)</td>
+                    <td>Mengambil list transaksi pada toko berdasarkan statusnya</td>
+                </tr>
+
+                <tr>
+                    <td>/transaction/{id}</td>
+                    <td>DELETE</td>
+                    <td>-</td>
+                    <td>Menghapus data transaksi berdasarkan id</td>
                 </tr>
 
             </tbody>
@@ -432,6 +446,49 @@
                     <td>Menghapus rekening berdasarkan id</td>
                 </tr>
 
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4" class="center"><h5>Chat</h5></th>
+                </tr>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Data</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/user/{user_id}/chat</td>
+                    <td>GET</td>
+                    <td>-</td>
+                    <td>Mengambil list yang pernah chat</td>
+                </tr>
+                
+                <tr>
+                    <td>/chat/user/{user_id}</td>
+                    <td>POST</td>
+                    <td>from</td>
+                    <td>Mengambil chat dari user yang login dan satunya</td>
+                </tr>
+                
+                <tr>
+                    <td>/chat/send/{user_id}</td>
+                    <td>POST</td>
+                    <td>to, chat</td>
+                    <td>Mengirim chat</td>
+                </tr>
+                
+                <tr>
+                    <td>/chat/{chat_id}</td>
+                    <td>DELETE</td>
+                    <td>-</td>
+                    <td>Menghapus chat berdasarkan id</td>
+                </tr>
             </tbody>
         </table>
 

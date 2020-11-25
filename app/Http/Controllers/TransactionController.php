@@ -21,7 +21,9 @@ class TransactionController extends Controller
             return $this->sendResponse('error', 'User Tidak Ada', null, 404);
         }
 
-        $transactions = Transaction::where('user_id', $id)->with('product')->get();
+        $transactions = Transaction::where('user_id', $id)->with(['product' => function($query) {
+            $query->select(['id', 'product_name', 'price', 'stock', 'image']);
+        }])->get();
 
         if ($transactions->isEmpty()) {
             return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
@@ -32,13 +34,15 @@ class TransactionController extends Controller
 
     public function getTransaction($id)
     {
-        $transaction = Transaction::where('id', $id)->with('product')->first();
+        $transaction = Transaction::where('id', $id)->with(['product' => function($query) {
+            $query->select(['id', 'product_name', 'price', 'stock', 'image', 'shop_id']);
+        }])->first();
         
-        $shop = Shop::where('id', $transaction->product->shop_id)->with('shopdetail')->first();
-
         if (!$transaction) {
             return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
         }
+
+        $shop = Shop::where('id', $transaction->product->shop_id)->with('shopdetail')->first();
 
         return $this->sendResponse('success', 'Data Berhasil Diambil', compact('transaction', 'shop'), 200);
     }
@@ -83,7 +87,7 @@ class TransactionController extends Controller
         $transaction->shop_id = $shop_id;
         $transaction->qty = $request->qty;
         $transaction->total = $request->qty * $product->price;
-        $transaction->status = 'pending';
+        $transaction->status = 'belum dibayar';
 
         $cart = Cart::where('user_id', $request->user_id)->where('product_id', $request->product_id)->first();
         if (!$cart) {
@@ -104,7 +108,7 @@ class TransactionController extends Controller
     public function setStatusTransaction(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'in:pending,proccess,done',
+            'status' => 'in:belum dibayar,diproses,dikirim,selesai,dibatalkan',
         ]);
 
         if ($validator->fails()) {
@@ -115,6 +119,16 @@ class TransactionController extends Controller
 
         if (!$transaction) {
             return $this->sendResponse('error', 'Data Transaction Tidak Ada', null, 404);
+        }
+
+        if ($transaction->status == 'dibatalkan') {
+            return $this->sendResponse('error', 'Transactions Sudah Dibatalkan', null, 404);
+        }
+
+        if ($request->status == 'dibatalkan') {
+            $product = Product::find($transaction->product_id);
+            $product->stock = $product->stock + $transaction->qty;
+            $product->save();
         }
 
         $transaction->status = $request->status;
@@ -136,7 +150,7 @@ class TransactionController extends Controller
             return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
         }
 
-        $transaction->status = 'proccess';
+        $transaction->status = 'diproses';
         $transaction->save();
 
         $validator = Validator::make($request->all(), [
@@ -160,7 +174,35 @@ class TransactionController extends Controller
             
             return $this->sendResponse('success', 'Pembayaran Dikonfirmasi', $invoice, 200);
         } catch (\Throwable $th) {
-            return $this->sendResponse('error', 'Pembayaran Dikonfirmasi', $th->getMessage(), 500);
+            return $this->sendResponse('error', 'Pembayaran Gagal Dikonfirmasi', $th->getMessage(), 500);
+        }
+    }
+
+    public function getTransactionByStatus(Request $request, $shop_id)
+    {
+        $transactions = Transaction::where('shop_id', $shop_id)->where('status', $request->status)->get();
+
+        if ($transactions->isEmpty()) {
+            return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data Berhasil Diambil', $transactions, 200);
+    }
+
+    public function destroy($id)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return $this->sendResponse('error', 'Data Transaction Tidak Ada', null, 404);
+        }
+
+        try {
+            $transaction->delete();
+            
+            return $this->sendResponse('success', 'Transaksi Dihapus', null, 200);
+        } catch (\Throwable $th) {
+            return $this->sendResponse('error', 'Transaksi Gagal Dihapus', $th->getMessage(), 500);
         }
     }
 }

@@ -14,7 +14,7 @@ class ShopController extends Controller
 {
     public function getShops()
     {
-        $shops = Shop::all();
+        $shops = Shop::select(['id', 'shop_name', 'image'])->get();
 
         if ($shops->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -132,7 +132,7 @@ class ShopController extends Controller
 
     public function getProducts($id)
     {
-        $products = Product::where('shop_id', $id)->get();
+        $products = Product::select(['id', 'product_name', 'price', 'stock', 'image'])->where('shop_id', $id)->get();
 
         if ($products->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -149,7 +149,7 @@ class ShopController extends Controller
             return $this->sendResponse('error', 'Shop Tidak Ada', null, 404);
         }
 
-        $products = Product::where('category_id' , '=' , $request->category_id, 'AND', 'shop_id', '=', $id)->get();
+        $products = Product::select(['id', 'product_name', 'price', 'stock', 'image'])->where('category_id' , '=' , $request->category_id, 'AND', 'shop_id', '=', $id)->get();
 
         if ($products->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -166,7 +166,9 @@ class ShopController extends Controller
             return $this->sendResponse('error', 'Shop Tidak Ada', null, 404);
         }
 
-        $transactions = Transaction::where('shop_id', $shop_id)->with('buyer', 'buying')->get();
+        $transactions = Transaction::where('shop_id', $shop_id)->with(['buyer', 'buying' => function($query) {
+            $query->select(['id', 'product_name', 'price', 'stock', 'image']);
+        }])->get();
 
         if (!$transactions) {
             return $this->sendResponse('error', 'Transactions Tidak Ada', null, 404);

@@ -17,7 +17,7 @@ class ProductController extends Controller
         // }, 'shop' => function($query) {
         //     $query->select('id', 'shop_name', 'image');
         // }])->get();
-        $products = Product::all();
+        $products = Product::select(['id', 'product_name', 'price', 'stock', 'image'])->get();
         
         if ($products->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
@@ -37,7 +37,7 @@ class ProductController extends Controller
         $product = Product::where('id', $id)->with(['category' => function($query) {
             $query->select('id', 'category');
         }, 'shop' => function($query) {
-            $query->select('id', 'shop_name', 'image');
+            $query->select('id', 'shop_name', 'image', 'user_id');
         }])->first();
         return $this->sendResponse('success', 'Data Berhasil Diambil', $product, 200);
     }
@@ -161,7 +161,7 @@ class ProductController extends Controller
         // }, 'shop' => function($query) {
         //     $query->select('id', 'shop_name', 'image');
         // }])->get();
-        $products = Product::where('category_id', $id)->get();
+        $products = Product::select(['id', 'product_name', 'price', 'stock', 'image'])->where('category_id', $id)->get();
         
         if ($products->isEmpty()) {
             return $this->sendResponse('error', 'Data Tidak Ada', null, 404);

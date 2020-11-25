@@ -13,8 +13,8 @@ class Product extends Model
 
     public function shop()
     {
-        // return $this->belongsTo('App\Shop')->with('owner');
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo('App\Shop')->with('owner');
+        // return $this->belongsTo('App\Shop');
     }
 
     public function category()

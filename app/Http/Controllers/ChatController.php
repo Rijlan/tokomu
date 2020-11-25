@@ -108,7 +108,7 @@ class ChatController extends Controller
             // $data = ['from' => $user_id, 'to' => $request->to]; // sending from and to user id when enter
             $pusher->trigger('my-channel', 'my-event', $chat);
 
-            // return $this->sendResponse('success', 'Chat Dikirim', $chat, 200);
+            return $this->sendResponse('success', 'Chat Dikirim', $chat, 200);
         } catch (\Throwable $th) {
             return $this->sendResponse('error', 'Chat Gagal Dikirim', $th->getMessage(), 500);
         }

@@ -85,6 +85,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/chat/user/{user_id}', 'ChatController@getMessage');
     Route::post('/chat/send/{user_id}', 'ChatController@sendMessage');
     Route::delete('/chat/{id}', 'ChatController@destroyMessage');
+    Route::post('/chat/user', 'ChatController@destroyUserMessage');
 });
 
 // Shop public

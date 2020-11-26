@@ -489,6 +489,13 @@
                     <td>-</td>
                     <td>Menghapus chat berdasarkan id</td>
                 </tr>
+
+                <tr>
+                    <td>/chat/user</td>
+                    <td>POST</td>
+                    <td>from, to</td>
+                    <td>Menghapus semua chat user yang dipilih</td>
+                </tr>
             </tbody>
         </table>
 

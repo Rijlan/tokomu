@@ -130,4 +130,30 @@ class ChatController extends Controller
             return $this->sendResponse('error', 'Chat Gagal Dihapus', null, 404);
         }
     }
+
+    public function destroyUserMessage(Request $request)
+    {
+        if ($request->from == $request->to) {
+            return $this->sendResponse('error', 'User sama', null, 404);
+        }
+
+        $from = Chat::where('from', $request->from)->where('to', $request->to)->get();
+        $to = Chat::where('from', $request->to)->where('to', $request->from)->get();
+
+        if ($from->isEmpty() && $to->isEmpty()) {
+            return $this->sendResponse('error', 'Data Tidak Ada', null, 404);
+        }
+
+        $from = Chat::where('from', $request->from)->where('to', $request->to);
+        $to = Chat::where('from', $request->to)->where('to', $request->from);
+                
+        try {
+            $from->delete();
+            $to->delete();
+
+            return $this->sendResponse('success', 'Chat Dihapus', null, 200);
+        } catch (\Throwable $th) {
+            return $this->sendResponse('error', 'Chat Gagal Dihapus', null, 404);
+        }
+    }
 }

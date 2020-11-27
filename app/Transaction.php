@@ -10,7 +10,9 @@ class Transaction extends Model
 
     public function product()
     {
-        return $this->belongsTo('App\Product')->with('shop');
+        return $this->belongsTo('App\Product')->with(['shop' => function($query) {
+            $query->select('id', 'shop_name', 'image', 'user_id');
+        }]);
     }
 
     public function buying()

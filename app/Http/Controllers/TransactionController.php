@@ -22,7 +22,7 @@ class TransactionController extends Controller
         }
 
         $transactions = Transaction::where('user_id', $id)->with(['product' => function($query) {
-            $query->select(['id', 'product_name', 'price', 'stock', 'image']);
+            $query->select(['id', 'product_name', 'price', 'stock', 'image', 'shop_id']);
         }])->get();
 
         if ($transactions->isEmpty()) {

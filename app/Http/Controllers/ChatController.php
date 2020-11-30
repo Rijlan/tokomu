@@ -20,22 +20,33 @@ class ChatController extends Controller
         }
         // dd($user->role);
         
-        $from = User::select('users.id', 'users.name', 'users.email')->leftJoin('chats', 'users.id' , '=', 'chats.from')->where('chats.to', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
-            $query->select('user_id', 'avatar'); 
-        }, 'shop' => function($query) {
-            $query->select('user_id', 'shop_name', 'image');
-        }])->get()->toArray();
+        // $from = User::select('users.id', 'users.name', 'users.email')->leftJoin('chats', 'users.id' , '=', 'chats.from')->where('chats.to', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
+        //     $query->select('user_id', 'avatar'); 
+        // }, 'shop' => function($query) {
+        //     $query->select('user_id', 'shop_name', 'image');
+        // }])->get()->toArray();
 
-        $to = User::select('users.id', 'users.name', 'users.email')->leftJoin('chats', 'users.id' , '=', 'chats.to')->where('chats.from', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
-            $query->select('user_id', 'avatar');
-        }, 'shop' => function($query) {
-            $query->select('user_id', 'shop_name', 'image');
-        }])->get()->toArray();
+        // $to = User::select('users.id', 'users.name', 'users.email')->leftJoin('chats', 'users.id' , '=', 'chats.to')->where('chats.from', $user_id)->where('users.id', '!=', $user_id)->groupBy('users.id', 'users.name', 'users.email')->with(['userdetail' => function($query) {
+        //     $query->select('user_id', 'avatar');
+        // }, 'shop' => function($query) {
+        //     $query->select('user_id', 'shop_name', 'image');
+        // }])->get()->toArray();
+
+        $chats = User::select('users.id', 'users.name', 'users.email', DB::raw('COUNT(is_read) AS unread'))
+            ->leftJoin('chats', 'users.id' , '=', 'chats.from')
+            ->where('is_read', 0)
+            ->where('chats.to', $user_id)
+            ->where('users.id', '!=', $user_id)
+            ->orWhere(function($query) use ($user_id) {
+                $query->where('chats.from', $user_id)->where('chats.to', $user_id);
+            })
+            ->groupBy('users.id', 'users.name', 'users.email')
+            ->with(['userdetail:user_id,avatar', 'shop:user_id,shop_name,image'])
+            ->get();
 
         $unread = Chat::select(DB::raw('COUNT(is_read) as unread'))->where('to', $user_id)->where('is_read', 0)->first();
 
-        $chats = array_unique(array_merge($from, $to), SORT_REGULAR);
-        // $chats = Chat::where('from', $user_id)->orWhere('to', $user_id)->get();
+        // $chats = array_unique(array_merge($from, $to), SORT_REGULAR);
 
         if (!$chats) {
             return $this->sendResponse('error', 'Chat Kosong', null, 404);

@@ -32,7 +32,7 @@ class ChatController extends Controller
             $query->select('user_id', 'shop_name', 'image');
         }])->get()->toArray();
 
-        $unread = Chat::select(DB::raw('COUNT(is_read) as unread'))->where('from', $user_id)->where('is_read', 0)->first();
+        $unread = Chat::select(DB::raw('COUNT(is_read) as unread'))->where('to', $user_id)->where('is_read', 0)->first();
 
         $chats = array_unique(array_merge($from, $to), SORT_REGULAR);
         // $chats = Chat::where('from', $user_id)->orWhere('to', $user_id)->get();

@@ -7,74 +7,52 @@
         {{ session('status') }}
     </div>
 @endif
-<div class="container">
-    <h4 class="center">Category</h4>
-    <div class="row">
-        <div class="col s12 m10 l8">
-            <table>
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Category</th>
-                        <th class="center">Action</th>
-                    </tr>
-                </thead>
-                @foreach($categories as $key => $category)
-                    <tbody>
-                        <tr>
-                            <td>{{ $key+1 }}</td>
-                            <td>{{ $category->category }}</td>
-                            <td class="center">
-                                <a href="#editCategory{{ $category->id }}" class="modal-trigger">
-                                    <button><i class="material-icons">edit</i></button>
-                                </a>
-                                <form action="/category/{{ $category->id }}" style="display: inline-block;"
-                                    method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit">
-                                        <i class="material-icons">delete</i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-
-                    <div class="modal" id="editCategory{{ $category->id }}">
-                        <div class="modal-content">
-                            <h4>Edit Category</h4>
-                            <form action="/category/{{ $category->id }}" method="post">
-                                @csrf
-                                @method('PUT')
-                                <label for="category">Category</label>
-                                <input type="text" name="category" id="category" required value="{{ $category->category }}" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn green">Update</button>
-                            </form>
-                            <a href="#" class="modal-close btn orange">Close</a>
-                        </div>
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="my-2">Category</h2>
+                    <div class="table-responsive m-b-40">
+                        <table class="table table-borderless table-data3">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Category</th>
+                                    <th class="center">Action</th>
+                                </tr>
+                            </thead>
+                            @foreach($categories as $key => $category)
+                                <tbody>
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
+                                        <td>{{ $category->category }}</td>
+                                        <td class="center">
+                                            <a href="/category/{{ $category->id }}/edit">
+                                                <button><i class="fa fa-lg fa-pencil-square-o mr-1"></i></button>
+                                            </a>
+                                            <form action="/category/{{ $category->id }}" style="display: inline-block;"
+                                                method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" onclick="return confirm('Anda Yakin ???');">
+                                                    <i class="fa fa-lg fa-trash ml-1"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            @endforeach
+                        </table>
                     </div>
-                @endforeach
-            </table>
+                    <a href="/category/create">
+                        <button class="btn btn-success">Tambah</button>
+                    </a>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
         </div>
     </div>
-
-    <a href="#addCategory" class="btn green waves-effect waves-light modal-trigger">Add Category</a>
-
-    <div class="modal" id="addCategory">
-        <div class="modal-content">
-            <h4>Add Category</h4>
-            <form action="/category" method="post">
-                @csrf
-                <label for="category">Category</label>
-                <input type="text" name="category" id="category" required />
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn green">Save</button>
-            </form>
-            <a href="#" class="modal-close btn orange">Close</a>
-        </div>
-    </div>
-    @endsection
 </div>
+
+@endsection

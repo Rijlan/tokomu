@@ -39,13 +39,13 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::find($id);
-        return view('/category.single', compact('category'));
+        return view('category.single', compact('category'));
     }
     
     public function edit($id)
     {
-        $categories = Category::find($id);
-        return view('/category.edit', compact('categories'));
+        $category = Category::find($id);
+        return view('category.edit', compact('category'));
     }
 
     public function update(Request $request, $id)

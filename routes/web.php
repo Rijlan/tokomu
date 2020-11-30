@@ -23,7 +23,7 @@ Auth::routes([
     'register' => false
 ]);
 
-//route categories
+//route categories	A001762872541B
 Route::get('/category', 'CategoryController@index');
 Route::get('category/create', 'CategoryController@create');
 Route::get('/category/{slug}', 'CategoryController@show');

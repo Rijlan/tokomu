@@ -16,7 +16,7 @@
                     <h3>Edit User</h3>
                     <div class="form-group">
                         <input id="name" type="text" class="form-control" name="name" value="{{$users->name}}">
-                        <label for="name">Name</label>
+                        <label for="name">Namae</label>
                     </div>
                     <div class="form-group">
                         <input id="email" type="email" class="form-control" name="email" value="{{$users->email}}">
@@ -27,14 +27,14 @@
                         <label for="password">Password</label>
                     </div>
                     <div class="form-group">
-                        <select class="form-control form-control-md">
+                        <select name="role" class="form-control">
                             <option value="" disabled selected>Choose your option</option>
                             <option value="999">Super Admin</option>
                             <option value="2">Seller</option>
                             <option value="3">Buyer</option>
                         </select>
                     </div>
-                        <button type="submit" class="btn btn-primary" name="submit">Kirim</button>
+                        <button type="submit" class="btn btn-primary">Ubah</button>
                 </form>
             </div>
         </div>

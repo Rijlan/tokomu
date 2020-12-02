@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-            <a href="/user/create" class="my-2 btn btn-success">Add User</a>
+            <a href="/user/create" class="btn btn-success">Add User</a>
         </div>
     </div>
 </div>

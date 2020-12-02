@@ -16,7 +16,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="category">Category</label>
-                                    <input type="text" class="form-control" name="category" id="category" required />
+                                    <input type="text" class="form-control" name="category" id="category" required>
                                 </div>
                                 <button class="btn btn-primary" type="submit">Simpan</button>
                             </form>

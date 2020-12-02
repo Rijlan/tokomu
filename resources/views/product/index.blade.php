@@ -35,7 +35,7 @@
                                         <td>{{ $product->stock }}</td>
                                         <td class="center">
                                             <a href="/product/{{ $product->id }}">
-                                                <button class="btn black"><i class="fa fa-lg fa-pencil-square-o mr-1"></i></button>
+                                                <button class="btn black"><i class="fa fa-lg fa-eye mr-1"></i></button>
                                             </a>
                                             <form action="/product/{{ $product->id }}" style="display: inline-block;"
                                                 method="POST">

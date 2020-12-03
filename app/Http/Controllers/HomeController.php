@@ -55,13 +55,14 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), [
             'name'          => 'required|string',
             'email'         => 'required|string',
-            'password'      => 'required|string',
+            'password'      => 'required',
             'role'          => 'required|integer'
 
         ]);
 
+        // $validator->validate();
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         User::create([
@@ -89,19 +90,21 @@ class HomeController extends Controller
 
     public function updateUser(Request $request, $id)
     {
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'name'         => 'required|string',
-            'email'        => 'rShopDeequired|integer'
+            'email'        => 'required|string'
         ]);
 
+        // $validator->validate();
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
         
         User::find($id)->update([
             'name'      => $request->name,
             'email'     => $request->email,
-            'password'  => $request->password,
+            'password' => Hash::make($request->password),
             'role'      => $request->role
         ]);
         return redirect('/user');

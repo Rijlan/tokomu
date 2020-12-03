@@ -23,7 +23,7 @@ Auth::routes([
     'register' => false
 ]);
 
-//route categories
+//route categories	A001762872541B
 Route::get('/category', 'CategoryController@index');
 Route::get('category/create', 'CategoryController@create');
 Route::get('/category/{slug}', 'CategoryController@show');
@@ -33,10 +33,10 @@ Route::put('/category/{id}', 'CategoryController@update');
 Route::delete('/category/{id}', 'CategoryController@destroy');
 
 //route users
+Route::post('/user', 'HomeController@storeUser');
 Route::get('/user', 'HomeController@getUser');
 Route::get('/user/create', 'HomeController@createUser');
 Route::get('/user/{slug}', 'HomeController@showUser');
-Route::post('/user', 'HomeController@storeUser');
 Route::get('/user/{id}/edit', 'HomeController@editUser');   
 Route::put('/user/{id}', 'HomeController@updateUser');
 Route::delete('/user/{id}', 'HomeController@destroyUser');

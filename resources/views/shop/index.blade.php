@@ -20,8 +20,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Shop</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
                                     <th>Owner</th>
                                     <th class="center">Action</th>
                                 </tr>
@@ -31,12 +29,10 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $shop->shop_name }}</td>
-                                        <td>{{ $shop->description }}</td>
-                                        <td><img src="{{ $shop->image }}" alt="{{ $shop->image }}" width="80px"></td>
-                                        <td>{{ $shop->shop_name }}</td>
+                                        <td>{{ $shop->owner->name }}</td>
                                         <td class="center">
-                                            <a href="/shop/{{ $shop->id }}/edit">
-                                                <button><i class="fa fa-lg fa-pencil-square-o mr-1"></i></button>
+                                            <a href="/shop/{{ $shop->id }}">
+                                                <button><i class="fa fa-lg fa-eye mr-1"></i></button>
                                             </a>
                                             <form action="/shop/{{ $shop->id }}" style="display: inline-block;"
                                                 method="POST">

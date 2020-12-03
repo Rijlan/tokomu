@@ -38,28 +38,13 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit">
+                                                <button type="submit" onclick="return confirm('Anda Yakin ???');">
                                                     <i class="fa fa-lg fa-trash ml-1"></i>
                                                 </button>
                                             </form>
                                         </td>
                                     </tr>
                                 </tbody>
-                                <div class="modal" id="editUser{{ $user->id }}">
-                                    <div class="modal-content">
-                                        <h4>Edit</h4>
-                                        <form action="/edit/{{ $user->id }}" method="post">
-                                            @csrf
-                                            @method('PUT')
-                                            <label for="user">User</label>
-                                            <input type="text" name="user" id="user" required value="{{ $user->user }}" />
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn green">Update</button>
-                                        </form>
-                                        <a href="#" class="modal-close btn orange">Close</a>
-                                    </div>
-                                </div>
                                 @endforeach
                             </table>
                         </div>

@@ -33,16 +33,16 @@ Route::put('/category/{id}', 'CategoryController@update');
 Route::delete('/category/{id}', 'CategoryController@destroy');
 
 //route users
-Route::post('/user', 'HomeController@storeUser');
 Route::get('/user', 'HomeController@getUser');
 Route::get('/user/create', 'HomeController@createUser');
-Route::get('/user/{slug}', 'HomeController@showUser');
+Route::post('/user', 'HomeController@storeUser');
 Route::get('/user/{id}/edit', 'HomeController@editUser');   
 Route::put('/user/{id}', 'HomeController@updateUser');
 Route::delete('/user/{id}', 'HomeController@destroyUser');
 
 //route shops
 Route::get('/shop', 'HomeController@getShop');
+Route::get('/shop/{id}', 'HomeController@detailShop');
 Route::delete('/shop/{id}', 'HomeController@destroyShop');
 
 //route products

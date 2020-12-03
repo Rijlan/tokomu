@@ -22,7 +22,7 @@
                                     <th>Price</th>
                                     <th>category</th>
                                     <th>Stock</th>
-                                    <th class="center">Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             @foreach($products as $key => $product)
@@ -33,7 +33,7 @@
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->category->category }}</td>
                                         <td>{{ $product->stock }}</td>
-                                        <td class="center">
+                                        <td class="text-center">
                                             <a href="/product/{{ $product->id }}">
                                                 <button class="btn black"><i class="fa fa-lg fa-eye mr-1"></i></button>
                                             </a>
@@ -41,7 +41,7 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit" class="btn red" onclick="return confirm('Anda Yakin ?');">
+                                                <button type="submit" onclick="return confirm('Anda Yakin ?');">
                                                     <i class="fa fa-lg fa-trash ml-1"></i>
                                                 </button>
                                             </form>

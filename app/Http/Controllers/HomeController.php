@@ -6,6 +6,7 @@ use App\Product;
 use App\Shop;
 use App\User;
 use App\Cart;
+use App\Category;
 use App\Invoice;
 use App\PaymentProof;
 use App\ShopDetail;
@@ -75,13 +76,6 @@ class HomeController extends Controller
 
     }
 
-    public function showUser($id)
-    {
-        $user = User::find($id);
-        return view('/user.single', compact('user'));
-
-    }
-
     public function editUser($id)
     {
         $users = User::find($id);
@@ -122,6 +116,12 @@ class HomeController extends Controller
     {
         $shops = Shop::all();
         return view('shop.index', compact('shops'));
+    }
+
+    public function detailShop($id)
+    {
+        $shop = Shop::where('id', $id)->with('owner', 'products')->first();
+        return view('shop.detail', compact('shop'));
     }
 
     public function destroyShop($id)

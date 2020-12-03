@@ -15,7 +15,7 @@
                     @method('PUT')
                     <h3>Edit User</h3>
                     <div class="form-group">
-                        <label for="name">Namae</label>
+                        <label for="name">Name</label>
                         <input id="name" type="text" class="form-control" name="name" value="{{$users->name}}">
                     </div>
                     <div class="form-group">

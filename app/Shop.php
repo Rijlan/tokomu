@@ -16,9 +16,13 @@ class Shop extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
+    // public function products()
+    // {
+    //     return $this->hasManyThrough('App\Product', 'App\User');
+    // }
     public function products()
     {
-        return $this->hasManyThrough('App\Product', 'App\User');
+        return $this->hasMany('App\Product');
     }
 
     public function shopdetail()

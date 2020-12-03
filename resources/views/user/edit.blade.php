@@ -15,16 +15,16 @@
                     @method('PUT')
                     <h3>Edit User</h3>
                     <div class="form-group">
-                        <input id="name" type="text" class="form-control" name="name" value="{{$users->name}}">
                         <label for="name">Namae</label>
+                        <input id="name" type="text" class="form-control" name="name" value="{{$users->name}}">
                     </div>
                     <div class="form-group">
-                        <input id="email" type="email" class="form-control" name="email" value="{{$users->email}}">
                         <label for="email">Email</label>
+                        <input id="email" type="email" class="form-control" name="email" value="{{$users->email}}">
                     </div>
                     <div class="form-group">
-                        <input id="password" type="password" class="form-control" name="password">
                         <label for="password">Password</label>
+                        <input id="password" type="password" class="form-control" name="password">
                     </div>
                     <div class="form-group">
                         <select name="role" class="form-control">
